@@ -5,8 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EM_Lab_1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Емпіричні методи: лабораторна робота 1" Height="600" Width="960">
     <Grid>
+        <TabControl>
+            <TabItem x:Name="MainTab" Header="Головна" FontSize="20">
+                <Grid Background="#FFE5E5E5">
+                    <Button x:Name="LoadDataButton" Content="Завантажити дані" HorizontalAlignment="Center" VerticalAlignment="Center" Height="229" Width="734" FontSize="25"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="FirstSelectionTab" Header="Перша вибірка" FontSize="20">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem x:Name="SecondSelectionTab" Header="Друга вибірка" FontSize="20">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem x:Name="BothSelectionsTab" Header="Обидві вибірки" FontSize="20">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
 
     </Grid>
 </Window>
