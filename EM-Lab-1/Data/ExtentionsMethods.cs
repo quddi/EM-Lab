@@ -1,10 +1,6 @@
-﻿using EM_Lab_1;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
+﻿using System.Drawing;
 
-namespace DE_Lab_1
+namespace EM_Lab_1
 {
     internal static class ExtensionsMethods
     {

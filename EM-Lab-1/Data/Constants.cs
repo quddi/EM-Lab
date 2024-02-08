@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Windows.Media;
 
-namespace DE_Lab_1
+namespace EM_Lab_1
 {
     public static class Constants
     {

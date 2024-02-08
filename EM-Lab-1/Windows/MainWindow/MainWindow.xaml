@@ -10,7 +10,7 @@
         <TabControl>
             <TabItem x:Name="MainTab" Header="Головна" FontSize="20">
                 <Grid Background="#FFE5E5E5">
-                    <Button x:Name="LoadDataButton" Content="Завантажити дані" HorizontalAlignment="Center" VerticalAlignment="Center" Height="229" Width="734" FontSize="25"/>
+                    <Button x:Name="LoadDataButton" Content="Завантажити дані" HorizontalAlignment="Center" VerticalAlignment="Center" Height="229" Width="734" FontSize="25" Click="LoadDataButtonClickHandler"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="FirstSelectionTab" Header="Перша вибірка" FontSize="20">

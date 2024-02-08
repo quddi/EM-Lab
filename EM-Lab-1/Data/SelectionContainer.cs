@@ -1,11 +1,8 @@
 ﻿using EM_Lab_1;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace DE_Lab_1
+namespace EM_Lab_1
 {
-    public class DataContainer
+    public class SelectionContainer
     {
         private int? _elementsCount;
 
@@ -283,7 +280,7 @@ namespace DE_Lab_1
 
         public required List<double> Datas { get; init; }
 
-        public DataContainer() { }
+        public SelectionContainer() { }
 
         #region Computing methods
         private void ComputeElementsCount()

@@ -9,15 +9,15 @@ namespace EM_Lab_1
 {
     public static class DataLoader
     {
-        public static List<double>? LoadValues()
+        public static (List<double>, List<double>)? LoadValues()
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
+            var openFileDialog = new OpenFileDialog();
 
             openFileDialog.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
 
             if (openFileDialog.ShowDialog() == true)
             {
-                string filePath = openFileDialog.FileName;
+                var filePath = openFileDialog.FileName;
 
                 try
                 {
@@ -32,9 +32,10 @@ namespace EM_Lab_1
             return null;
         }
 
-        private static List<double> ReadNumbersFromFile(string filePath)
+        private static (List<double>, List<double>) ReadNumbersFromFile(string filePath)
         {
-            List<double> numbers = new List<double>();
+            var firstSelection = new List<double>();
+            var secondSelection = new List<double>();
 
             try
             {
@@ -42,17 +43,23 @@ namespace EM_Lab_1
 
                 foreach (string line in lines)
                 {
-                    string[] tokens = line.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+                    string[] tokens = line
+                        .Replace('.', ',')
+                        .Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
 
-                    foreach (string token in tokens)
-                    {
-                        var modifiedToken = token.Replace('.', ',');
+                    if (tokens.Length != 2)
+                        MessageBox.Show($"Помилка при зчитуванні рядка: {line}");
 
-                        if (double.TryParse(modifiedToken, out double number))
-                            numbers.Add(number);
-                        else
-                            MessageBox.Show($"Помилка при зчитуванні числа: {token}");
-                    }
+                    if (double.TryParse(tokens[0], out double firstValue)) 
+                        firstSelection.Add(firstValue);
+                    else
+                        MessageBox.Show($"Помилка при зчитуванні числа: {tokens[0]}");
+
+                    if (double.TryParse(tokens[1], out double secondValue))
+                        secondSelection.Add(secondValue);
+                    else
+                        MessageBox.Show($"Помилка при зчитуванні числа: {tokens[1]}");
+
                 }
             }
             catch (Exception ex)
@@ -60,7 +67,7 @@ namespace EM_Lab_1
                 MessageBox.Show($"Помилка при зчитуванні файлу: {ex.Message}");
             }
 
-            return numbers;
+            return (firstSelection, secondSelection);
         }
     }
 }
