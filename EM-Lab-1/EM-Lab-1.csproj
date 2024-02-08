@@ -13,8 +13,4 @@
     <PackageReference Include="ScottPlot.WPF" Version="4.1.67" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Windows\NewFolder\" />
-  </ItemGroup>
-
 </Project>
