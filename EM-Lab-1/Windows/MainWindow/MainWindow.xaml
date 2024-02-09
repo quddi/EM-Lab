@@ -13,11 +13,14 @@
                     <Button x:Name="LoadDataButton" Content="Завантажити дані" HorizontalAlignment="Center" VerticalAlignment="Center" Height="229" Width="734" FontSize="25" Click="LoadDataButtonClickHandler"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="FirstSelectionTab" Header="Перша вибірка" FontSize="20">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>
-            <TabItem x:Name="SecondSelectionTab" Header="Друга вибірка" FontSize="20">
-                <Grid Background="#FFE5E5E5"/>
+            <TabItem x:Name="OneSelectionTab" Header="Одна вибірка" FontSize="20" Height="31" VerticalAlignment="Top">
+                <Grid Background="#FFE5E5E5">
+                    <ComboBox HorizontalAlignment="Left" Margin="10,11,0,0" VerticalAlignment="Top" Width="183" SelectedIndex="0" Height="40">
+                        <ComboBoxItem Content="Перша вибірка"/>
+                        <ComboBoxItem Content="Друга вибірка"/>
+                    </ComboBox>
+                    <Image HorizontalAlignment="Center" Height="345" VerticalAlignment="Top" Width="934" Source="/Other/Images/table.png" Margin="0,75,0,0"/>
+                </Grid>
             </TabItem>
             <TabItem x:Name="BothSelectionsTab" Header="Обидві вибірки" FontSize="20">
                 <Grid Background="#FFE5E5E5"/>
