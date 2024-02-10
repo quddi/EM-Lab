@@ -43,7 +43,9 @@
                 </Grid>
             </TabItem>
             <TabItem x:Name="BothSelectionsTab" Header="Обидві вибірки" FontSize="20">
-                <Grid Background="#FFE5E5E5"/>
+                <Grid Background="#FFE5E5E5">
+                    <WpfPlot x:Name="CorrelationFieldPlot" Height="545" Width="477" VerticalAlignment="Top" Margin="477,0,0,0" HorizontalAlignment="Right"/>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>

@@ -12,10 +12,12 @@ public partial class MainWindow
         if (loadResult == null)
             return;
 
-        _firstSelectionContainer = new SelectionContainer() { Datas = loadResult.Value.Item1 };
-        _secondSelectionContainer = new SelectionContainer() { Datas = loadResult.Value.Item2 };
+        _firstSelectionContainer = new SelectionContainer() { Values = loadResult.Value.Item1 };
+        _secondSelectionContainer = new SelectionContainer() { Values = loadResult.Value.Item2 };
 
         SelectionComboBox.SelectedIndex = (int)SelectionNumber.None;
+
+        _twoSelectionsTab!.VisualizeSelections(_firstSelectionContainer, _secondSelectionContainer);
     }
 
     private void SelectionComboBoxSelectionChangedHandler(object _, SelectionChangedEventArgs __)

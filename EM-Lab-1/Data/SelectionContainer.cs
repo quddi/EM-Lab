@@ -278,19 +278,19 @@ namespace EM_Lab_1
             }
         }
 
-        public required List<double> Datas { get; init; }
+        public required List<double> Values { get; init; }
 
         public SelectionContainer() { }
 
         #region Computing methods
         private void ComputeElementsCount()
         {
-            _elementsCount = Datas.Count;
+            _elementsCount = Values.Count;
         }
 
         private void ComputeMean()
         {
-            _mean = Datas.Average();
+            _mean = Values.Average();
 
             _meanSigma = Compute.MeanSquaredStandardDeviation(StandardDeviation, ElementsCount);
 
@@ -299,7 +299,7 @@ namespace EM_Lab_1
 
         private void ComputeMedian()
         {
-            var orderedValues = Datas?.Order()?.ToList()!;
+            var orderedValues = Values?.Order()?.ToList()!;
 
             _median = ElementsCount % 2 == 0
                 ? (orderedValues[ElementsCount / 2] + orderedValues[ElementsCount / 2 - 1]) / 2f
@@ -324,7 +324,7 @@ namespace EM_Lab_1
 
         private void ComputeFirstSkewnessCoefficient()
         {
-            var sum = Datas.Sum(value =>
+            var sum = Values.Sum(value =>
             {
                 var delta = value - Mean;
 
@@ -349,7 +349,7 @@ namespace EM_Lab_1
 
         private void ComputeFirstKurtosisCoefficient()
         {
-            var sum = Datas.Sum(value =>
+            var sum = Values.Sum(value =>
             {
                 var delta = value - Mean;
                 return delta * delta * delta * delta;
@@ -372,7 +372,7 @@ namespace EM_Lab_1
 
         private void ComputeVariance()
         {
-            var sum = Datas.Sum(value =>
+            var sum = Values.Sum(value =>
             {
                 var delta = value - _mean;
                 return delta * delta;
@@ -403,7 +403,7 @@ namespace EM_Lab_1
 
         private void ComputeRanks()
         {
-            _ranks = Compute.Ranks(Datas);
+            _ranks = Compute.Ranks(Values);
         }
 
         private void ComputeIsNormalDistributed()

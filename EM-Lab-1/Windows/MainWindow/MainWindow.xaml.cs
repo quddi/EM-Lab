@@ -5,6 +5,7 @@ namespace EM_Lab_1;
 public partial class MainWindow : Window
 {
     private OneSelectionTab? _oneSelectionTab;
+    private TwoSelectionsTab? _twoSelectionsTab;
 
     private SelectionContainer? _firstSelectionContainer;
     private SelectionContainer? _secondSelectionContainer;
@@ -18,6 +19,7 @@ public partial class MainWindow : Window
     private void InitializeTabs()
     {
         InitializeOneSelectionTab();
+        InitializeTwoSelectionsTab();
     }
 
     private void InitializeOneSelectionTab()
@@ -30,6 +32,12 @@ public partial class MainWindow : Window
             .SetKurtosisTextBoxes(KurtosisTextBox, KurtosisIntervalTextBox);
 
         SelectionComboBox.SelectedIndex = (int)SelectionNumber.None;
+    }
+
+    private void InitializeTwoSelectionsTab()
+    {
+        _twoSelectionsTab = new TwoSelectionsTab()
+            .SetCorrelationFieldPlot(CorrelationFieldPlot);
     }
 
     private void SetOneSelection(SelectionNumber selectionNumber)
