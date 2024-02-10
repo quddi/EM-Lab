@@ -10,6 +10,10 @@ public partial class TwoSelectionsTab
     {
         _correlationFieldPlot = correlationFieldPlot;
 
+        _correlationFieldPlot.Plot.Title("Кореляційне поле");
+        _correlationFieldPlot.Plot.XLabel("X");
+        _correlationFieldPlot.Plot.YLabel("Y");
+
         return this;
     }
 }
