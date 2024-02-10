@@ -25,5 +25,11 @@
         {
             return HashCode.Combine(LeftEdge, RightEdge);
         }
+
+        public void Deconstruct(out double leftEdge,  out double rightEdge)
+        {
+            leftEdge = LeftEdge;
+            rightEdge = RightEdge;
+        }
     }
 }

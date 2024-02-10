@@ -48,6 +48,11 @@ namespace EM_Lab_1
             return $"[{pair.LeftEdge.ToFormattedString()}; {pair.RightEdge.ToFormattedString()}]";
         }
 
+        public static string ToFormattedString(this Interval pair)
+        {
+            return ToFormattedString((pair.LeftEdge, pair.RightEdge));
+        }
+
         public static bool IsEqual(this double a, double b) => Math.Abs(a - b) < Constants.Tolerance;
 
         public static bool IsLessOrEqual(this double a, double b) => a < b || a.IsEqual(b);
