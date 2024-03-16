@@ -15,6 +15,13 @@ public partial class TwoSelectionsTab
     private void VisualizeNoneSelections()
     {
         _correlationFieldPlot!.Plot.Clear();
+
+        SetTextBoxesEmpty();
+    }
+
+    private void SetTextBoxesEmpty()
+    {
+        TextBox
     }
 
     private void VisualizeExistingSelections(SelectionContainer firstSelection, SelectionContainer secondSelection)

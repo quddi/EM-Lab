@@ -37,7 +37,12 @@ public partial class MainWindow : Window
     private void InitializeTwoSelectionsTab()
     {
         _twoSelectionsTab = new TwoSelectionsTab()
-            .SetCorrelationFieldPlot(CorrelationFieldPlot);
+            .SetCorrelationFieldPlot(CorrelationFieldPlot)
+            .SetPearsonTextBoxes(PearsonValueTextBox, PearsonIntervalTextBox, PearsonStatisticsTextBox, PearsonQuantileTextBox, PearsonFirstConclusionTextBox, PearsonSecondConclusionTextBox)
+            .SetCorellationRatioTextBoxes(CorellationRatioValueTextBox, CorellationRatioStatisticsTextBox, CorellationRatioQuantileTextBox, CorellationRatioFirstConclusionTextBox, CorellationRatioSecondConclusionTextBox)
+            .SetSpearmanTextBoxes(SpearmanValueTextBox, SpearmanStatisticsTextBox, SpearmanQuantileTextBox, SpearmanFirstConclusionTextBox, SpearmanSecondConclusionTextBox)
+            .SetKendallTextBoxes(KendallValueTextBox, KendallStatisticsTextBox, KendallQuantileTextBox, KendallFirstConclusionTextBox, KendallSecondConclusionTextBox)
+            .SetMainTextBoxes(MainPearsonValueTextBox, MainCorellationRatioValueTextBox, MainStatisticsTextBox, MainQuantileTextBox, MainFirstConclusionTextBox, MainSecondConclusionTextBox);
     }
 
     private void SetOneSelection(SelectionNumber selectionNumber)
