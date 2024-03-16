@@ -1,6 +1,4 @@
-﻿using EM_Lab_1;
-
-namespace EM_Lab_1
+﻿namespace EM_Lab_1
 {
     public class SelectionContainer
     {
@@ -34,6 +32,7 @@ namespace EM_Lab_1
         private double? _kurtosisStatistics;
         private double? _rankingStatistics;
         private bool? _isNormalDistributed;
+        private List<double>? _classifiedValues;
         private Dictionary<double, double>? _ranks;
 
         public int ElementsCount
@@ -60,7 +59,8 @@ namespace EM_Lab_1
         {
             get
             {
-                if (_meanSigma == null) ComputeMean();
+                if (_meanSigma == null)
+                    ComputeMean();
 
                 return _meanSigma!.Value;
             }
@@ -267,6 +267,17 @@ namespace EM_Lab_1
             set => _rankingStatistics = value;
         }
 
+        public List<double> ClassifiedValues
+        {
+            get
+            {
+                if (_classifiedValues == null)
+                    ComputeClassifiedValues();
+
+                return _classifiedValues!;
+            }
+        }
+
         public Dictionary<double, double> Ranks
         {
             get
@@ -338,7 +349,7 @@ namespace EM_Lab_1
 
         private void ComputeSecondSkewnessCoefficient()
         {
-            _secondSkewnessCoefficient = (FirstSkewnessCoefficient * Math.Sqrt(ElementsCount * (ElementsCount - 1)) / (ElementsCount - 2));
+            _secondSkewnessCoefficient = FirstSkewnessCoefficient * Math.Sqrt(ElementsCount * (ElementsCount - 1)) / (ElementsCount - 2);
 
             _secondSkewnessCoefficientSigma = Compute.SkewnessCoefficientRootMeanSquareDeviation(ElementsCount);
 
@@ -355,12 +366,12 @@ namespace EM_Lab_1
                 return delta * delta * delta * delta;
             });
 
-            _firstKurtosisCoefficient = (sum / (ElementsCount * ShiftedVariance * ShiftedVariance)) - 3;
+            _firstKurtosisCoefficient = sum / (ElementsCount * ShiftedVariance * ShiftedVariance) - 3;
         }
 
         private void ComputeSecondKurtosisCoefficient()
         {
-            _secondKurtosisCoefficient = (FirstKurtosisCoefficient + 6.0 / (ElementsCount + 1)) 
+            _secondKurtosisCoefficient = (FirstKurtosisCoefficient + 6.0 / (ElementsCount + 1))
                 * ((ElementsCount * ElementsCount - 1) / ((ElementsCount - 2) * (ElementsCount - 3)));
 
             _secondKurtosisCoefficientSigma = Compute.KurtosisCoefficientRootMeanSquareDeviation(ElementsCount);
@@ -399,6 +410,11 @@ namespace EM_Lab_1
         private void ComputeKurtosisStatistics()
         {
             _kurtosisStatistics = SecondKurtosisCoefficient / SecondKurtosisCoefficientSigma;
+        }
+
+        private void ComputeClassifiedValues()
+        {
+            _classifiedValues = Compute.ClassifiedValues(Values);
         }
 
         private void ComputeRanks()
