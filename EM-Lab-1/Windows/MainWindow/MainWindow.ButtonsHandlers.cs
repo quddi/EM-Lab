@@ -14,10 +14,11 @@ public partial class MainWindow
 
         _firstSelectionContainer = new SelectionContainer() { Values = loadResult.Value.Item1 };
         _secondSelectionContainer = new SelectionContainer() { Values = loadResult.Value.Item2 };
+        _twoSelectionsContainer = new TwoSelectionsContainer(false) { FirstSelection = _firstSelectionContainer, SecondSelection = _secondSelectionContainer };
 
         SelectionComboBox.SelectedIndex = (int)SelectionNumber.None;
 
-        _twoSelectionsTab!.VisualizeSelections(_firstSelectionContainer, _secondSelectionContainer);
+        _twoSelectionsTab!.VisualizeSelections(_twoSelectionsContainer);
     }
 
     private void SelectionComboBoxSelectionChangedHandler(object _, SelectionChangedEventArgs __)

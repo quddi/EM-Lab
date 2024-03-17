@@ -10,7 +10,6 @@ internal static class ExtensionsMethods
         Color.Green,
         Color.Magenta,
         Color.Cyan,
-        Color.Bisque,
         Color.Fuchsia,
         Color.Firebrick,
         Color.Coral,

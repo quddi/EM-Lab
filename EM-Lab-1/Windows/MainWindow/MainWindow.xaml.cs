@@ -9,6 +9,7 @@ public partial class MainWindow : Window
 
     private SelectionContainer? _firstSelectionContainer;
     private SelectionContainer? _secondSelectionContainer;
+    private TwoSelectionsContainer? _twoSelectionsContainer;
 
     public MainWindow()
     {

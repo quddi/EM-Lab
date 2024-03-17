@@ -5,7 +5,6 @@ public class TwoSelectionsContainer
     private double? _multiplicationMean;
     private double? _studentQuantile;
     private double? _fisherQuantile;
-    private double? _k;
 
     private double? _pearsonCoefficient;
     private double? _pearsonStatistics;
@@ -21,6 +20,8 @@ public class TwoSelectionsContainer
     private double? _corellationRatioYXStatistics;
 
     private Dictionary<(double x, double y), (double xRank, double yRank)>? _ranks;
+    private TwoSelectionsContainer? _classifyingPerformedSelectionsContainer;
+    private readonly bool _isClassifyingReformed;
 
     public double MultiplicationMean
     {
@@ -55,16 +56,7 @@ public class TwoSelectionsContainer
         }
     }
 
-    public double K
-    {
-        get
-        {
-            if (_k == null)
-                ComputeK();
-
-            return _k!.Value;
-        }
-    }
+    public int ClassesCount => FirstSelection.ClassesCount;
 
     public double PearsonCoefficient
     {
@@ -181,11 +173,25 @@ public class TwoSelectionsContainer
         }
     }
 
+    public TwoSelectionsContainer ClassifyingPerformedSelectionsContainer
+    {
+        get
+        {
+            if (_classifyingPerformedSelectionsContainer == null)
+                ComputeClassifyingPerformedSelectionsContainer();
+
+            return _classifyingPerformedSelectionsContainer!;
+        }
+    }
+
     public required SelectionContainer FirstSelection { get; init; }
 
     public required SelectionContainer SecondSelection { get; init; }
 
-    public TwoSelectionsContainer() { }
+    public TwoSelectionsContainer(bool isClassifyingReformed) 
+    {
+        _isClassifyingReformed = isClassifyingReformed;
+    }
 
     #region Computing methods
     private void ComputeMultiplicationMean()
@@ -198,18 +204,12 @@ public class TwoSelectionsContainer
     private void ComputeFisherQuantile()
     {
         _fisherQuantile = Compute.FisherDistributionQuantile(1 - Constants.Alpha,
-            K - 1, ElementsCount - K);
+            ClassesCount - 1, ElementsCount - ClassesCount);
     }
 
     private void ComputeStudentQuantile()
     {
         _studentQuantile = Compute.StudentDistributionQuantile(1D - Constants.Alpha / 2, ElementsCount - 2);
-    }
-
-    private void ComputeK()
-    {
-        //TODO: Fix
-        _k = 0;
     }
 
     private void ComputePearsonCoefficient()
@@ -253,7 +253,7 @@ public class TwoSelectionsContainer
             var x = FirstSelection.Values[i];
             var y = SecondSelection.Values[i];
             var xRank = FirstSelection.Ranks[x];
-            var yRank = FirstSelection.Ranks[y];
+            var yRank = SecondSelection.Ranks[y];
 
             _ranks[(x, y)] = (xRank, yRank);
         }
@@ -261,12 +261,24 @@ public class TwoSelectionsContainer
         _ranks = _ranks.OrderBy(pair => pair.Value.xRank).ToDictionary();
     }
 
+    private void ComputeClassifyingPerformedSelectionsContainer()
+    {
+        if (_isClassifyingReformed) throw new InvalidOperationException(
+            "Trying to compute classifying performed selections container from another one!");
+
+        _classifyingPerformedSelectionsContainer = new TwoSelectionsContainer(true)
+        {
+            FirstSelection = new() { Values = FirstSelection.ClassifiedValues },
+            SecondSelection = new() { Values = SecondSelection.Values },
+        };
+    }
+
     private void ComputeSpearmanCoefficient()
     {
         var rx = Ranks.Values.Select(pair => pair.xRank).ToList();
         var ry = Ranks.Values.Select(pair => pair.yRank).ToList();
 
-        var tempSelectionsContainer = new TwoSelectionsContainer()
+        var tempSelectionsContainer = new TwoSelectionsContainer(false)
         {
             FirstSelection = new() { Values = rx },
             SecondSelection = new() { Values = ry }
@@ -306,12 +318,12 @@ public class TwoSelectionsContainer
         var nominator =
             (CorellationRatioYX * CorellationRatioYX - PearsonCoefficient * PearsonCoefficient)
             / 
-            (K - 2);
+            (ClassesCount - 2);
 
         var denominator =
             (1 - CorellationRatioYX * CorellationRatioYX)
             /
-            (ElementsCount - K);
+            (ElementsCount - ClassesCount);
 
         _corellationRatioYXStatistics = nominator / denominator;
     }

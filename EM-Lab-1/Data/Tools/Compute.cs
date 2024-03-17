@@ -194,9 +194,13 @@ public static class Compute
         return Sqrt(num / den);
     }
 
-    public static List<double> ClassifiedValues(List<double> xAxis)
+    public static int ClassesCount(int elementsCount)
     {
-        var classesCount = Ceiling(1 + 1.44 * Log(xAxis.Count));
+        return (int)Ceiling(1 + 1.44 * Log(elementsCount));
+    }
+
+    public static List<double> ClassifiedValues(List<double> xAxis, int classesCount)
+    {
         var max = xAxis.Max();
         var min = xAxis.Min();
         var classWidth = (max - min) / classesCount;

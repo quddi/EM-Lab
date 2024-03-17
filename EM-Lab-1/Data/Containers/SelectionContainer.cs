@@ -3,6 +3,7 @@
     public class SelectionContainer
     {
         private int? _elementsCount;
+        private int? _classesCount;
 
         private double? _mean;
         private double? _meanSigma;
@@ -43,6 +44,17 @@
                     ComputeElementsCount();
 
                 return _elementsCount!.Value;
+            }
+        }
+
+        public int ClassesCount
+        {
+            get
+            {
+                if (_classesCount == null)
+                    ComputeClassesCount();
+
+                return _classesCount!.Value;
             }
         }
 
@@ -299,6 +311,11 @@
             _elementsCount = Values.Count;
         }
 
+        private void ComputeClassesCount()
+        {
+            _classesCount = Compute.ClassesCount(ElementsCount);
+        }
+
         private void ComputeMean()
         {
             _mean = Values.Average();
@@ -414,7 +431,7 @@
 
         private void ComputeClassifiedValues()
         {
-            _classifiedValues = Compute.ClassifiedValues(Values);
+            _classifiedValues = Compute.ClassifiedValues(Values, ClassesCount);
         }
 
         private void ComputeRanks()
