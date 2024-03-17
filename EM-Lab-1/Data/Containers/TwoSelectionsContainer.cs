@@ -316,9 +316,9 @@ public class TwoSelectionsContainer
     private void ComputeCorellationRatioYXStatistics()
     {
         var nominator =
-            (CorellationRatioYX * CorellationRatioYX - PearsonCoefficient * PearsonCoefficient)
+            (CorellationRatioYX * CorellationRatioYX)
             / 
-            (ClassesCount - 2);
+            (ClassesCount - 1);
 
         var denominator =
             (1 - CorellationRatioYX * CorellationRatioYX)

@@ -85,7 +85,7 @@ public partial class TwoSelectionsTab
         _pearsonStatisticsTextBox!.Text = twoSelectionsContainer.PearsonStatistics.ToFormattedString();
         _pearsonQuantileTextBox!.Text = twoSelectionsContainer.StudentQuantile.ToFormattedString();
 
-        var isCorellationSignificant = Math.Abs(twoSelectionsContainer.PearsonCoefficient) > twoSelectionsContainer.StudentQuantile;
+        var isCorellationSignificant = Math.Abs(twoSelectionsContainer.PearsonStatistics) > twoSelectionsContainer.StudentQuantile;
 
         var brush = isCorellationSignificant
             ? Constants.OkBrush
@@ -109,8 +109,22 @@ public partial class TwoSelectionsTab
         _corellationRatioStatisticsTextBox!.Text = twoSelectionsContainer.CorellationRatioYXStatistics.ToFormattedString();
         _corellationRatioQuantileTextBox!.Text = twoSelectionsContainer.FisherQuantile.ToFormattedString();
 
-        _corellationRatioFirstConclusionTextBox!.Text = "???";
-        _corellationRatioSecondConclusionTextBox!.Text = "???";
+        var isCorellationSignificant = twoSelectionsContainer.CorellationRatioYXStatistics > twoSelectionsContainer.FisherQuantile;
+
+        var brush = isCorellationSignificant
+            ? Constants.OkBrush
+            : Constants.NotOkBrush;
+
+        _corellationRatioFirstConclusionTextBox!.Background = brush;
+        _corellationRatioSecondConclusionTextBox!.Background = brush;
+
+        _corellationRatioFirstConclusionTextBox!.Text = isCorellationSignificant
+            ? "Кореляція значуща"
+            : "Кореляція незначуща";
+
+        _corellationRatioSecondConclusionTextBox!.Text = isCorellationSignificant 
+            ? "Є стохастичний зв'язок"
+            : "Стохастичного зв'язку немає";
     }
 
     private void VisualizeSpearman(TwoSelectionsContainer twoSelectionsContainer)
