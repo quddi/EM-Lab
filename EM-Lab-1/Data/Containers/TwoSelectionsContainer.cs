@@ -229,7 +229,9 @@ public class TwoSelectionsContainer
     private void ComputePearsonCoefficientTrustInterval()
     {
         var difference = (1 - PearsonCoefficient * PearsonCoefficient);
+
         var firstApplication =
+            PearsonCoefficient +
             (PearsonCoefficient * difference)
             /
             (2 * ElementsCount);
@@ -310,7 +312,7 @@ public class TwoSelectionsContainer
 
     private void ComputeCorellationRatioYX()
     {
-        _corellationRatioYX = Compute.CorrelationRatio(FirstSelection.Values, SecondSelection.Values);
+        _corellationRatioYX = Compute.CorrelationRatio(ClassifyingPerformedSelectionsContainer.FirstSelection.Values, SecondSelection.Values);
     }
 
     private void ComputeCorellationRatioYXStatistics()

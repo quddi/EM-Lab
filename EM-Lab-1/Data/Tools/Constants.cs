@@ -15,6 +15,14 @@ public static class Constants
     public const double D2 = 0.1892659;
     public const double D3 = 0.001308;
 
+    public static readonly Color OkColor = Color.FromRgb(161, 255, 162);
+    public static readonly Color NotOkColor = Color.FromRgb(255, 164, 161);
+    public static readonly Color ActiveColor = Color.FromRgb(204, 204, 204);
+    public static readonly Color InactiveColor = Color.FromRgb(121, 121, 121);
+
+    public static readonly Brush OkBrush = new SolidColorBrush(OkColor);
+    public static readonly Brush NotOkBrush = new SolidColorBrush(NotOkColor);
+
     public static double NormalDistributionQuantile
     {
         get
@@ -25,12 +33,4 @@ public static class Constants
             return _normalDistributionQuantile!.Value;
         }
     }
-
-    public static readonly Color OkColor = Color.FromRgb(161, 255, 162);
-    public static readonly Color NotOkColor = Color.FromRgb(255, 164, 161);
-    public static readonly Color ActiveColor = Color.FromRgb(204, 204, 204);
-    public static readonly Color InactiveColor = Color.FromRgb(121, 121, 121);
-
-    public static readonly Brush OkBrush = new SolidColorBrush(OkColor);
-    public static readonly Brush NotOkBrush = new SolidColorBrush(NotOkColor);
 }

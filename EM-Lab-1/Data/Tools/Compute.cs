@@ -187,11 +187,11 @@ public static class Compute
             .ToList();
 
         var avgY = y.Average();
-        var den = y.Sum(yi => Pow(yi - avgY, 2));
+        var denominator = y.Sum(yi => Pow(yi - avgY, 2));
 
-        var num = partition.Sum(c => c.Count() * Pow(c.Average() - avgY, 2));
+        var numerator = partition.Sum(c => c.Count() * Pow(c.Average() - avgY, 2));
 
-        return Sqrt(num / den);
+        return Sqrt(numerator / denominator);
     }
 
     public static int ClassesCount(int elementsCount)
@@ -227,12 +227,12 @@ public static class Compute
             .ToArray();
 
         var allPointsCombinations = points
-            .SelectMany((p1, i) => points
+            .SelectMany((point1, i) => points
                 .Skip(i + 1)
-                .Select(p2 => (p1, p2)));
+                .Select(point2 => (point1, point2)));
 
         var tiesDictionary = allPointsCombinations
-            .GroupBy(pointsPair => GetTieValue(pointsPair.p1, pointsPair.p2))
+            .GroupBy(pointsPair => GetTieValue(pointsPair.point1, pointsPair.point2))
             .ToDictionary(grouping => grouping.Key, grouping => grouping.Count());
 
         double nc = tiesDictionary.GetValueOrDefault(1, 0);
