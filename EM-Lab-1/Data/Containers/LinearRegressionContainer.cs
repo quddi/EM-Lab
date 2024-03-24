@@ -1,7 +1,7 @@
 ﻿
 namespace EM_Lab_1;
 
-class LinearRegressionContainer : TwoSelectionsContainer
+public class LinearRegressionContainer : TwoSelectionsContainer
 {
     private double? _interceptCoefficient;  //a0
     private double? _interceptVariance;

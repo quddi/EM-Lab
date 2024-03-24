@@ -4,12 +4,12 @@ namespace EM_Lab_1;
 
 public partial class TwoSelectionsTab
 {
-    public void VisualizeSelections(TwoSelectionsContainer? twoSelectionsContainer)
+    public void VisualizeSelections(LinearRegressionContainer? linearRegressionContainer)
     {
-        if (twoSelectionsContainer == null)
+        if (linearRegressionContainer == null)
             VisualizeNoneSelections();
         else
-            VisualizeExistingSelections(twoSelectionsContainer);
+            VisualizeExistingSelections(linearRegressionContainer);
     }
 
     private void VisualizeNoneSelections()
@@ -50,14 +50,15 @@ public partial class TwoSelectionsTab
         _mainSecondConclusionTextBox!.Text = string.Empty;
     }
 
-    private void VisualizeExistingSelections(TwoSelectionsContainer twoSelectionsContainer)
+    private void VisualizeExistingSelections(LinearRegressionContainer linearRegressionContainer)
     {
-        VisualizePlot(twoSelectionsContainer);
-        VisualizePearson(twoSelectionsContainer);
-        VisualizeCorellationRation(twoSelectionsContainer);
-        VisualizeSpearman(twoSelectionsContainer);
-        VisualizeKendall(twoSelectionsContainer);
-        VisualizeMain(twoSelectionsContainer);
+        VisualizePlot(linearRegressionContainer);
+        VisualizePearson(linearRegressionContainer);
+        VisualizeCorellationRation(linearRegressionContainer);
+        VisualizeSpearman(linearRegressionContainer);
+        VisualizeKendall(linearRegressionContainer);
+        VisualizeMain(linearRegressionContainer);
+        VisualizeLinearRegression(linearRegressionContainer);
     }
 
     private void VisualizePlot(TwoSelectionsContainer twoSelectionsContainer)
@@ -201,5 +202,59 @@ public partial class TwoSelectionsTab
         _mainSecondConclusionTextBox!.Text = isCorellationSignificant
             ? "Є лінійний зв'язок"
             : "Лінійного зв'язку немає";
+    }
+
+    private void VisualizeLinearRegression(LinearRegressionContainer linearRegressionContainer)
+    {
+        VisualizeA0(linearRegressionContainer);
+        VisualizeA1(linearRegressionContainer);
+    }
+
+    private void VisualizeA0(LinearRegressionContainer linearRegressionContainer)
+    {
+        _valueA0TextBox!.Text = linearRegressionContainer.InterceptCoefficient.ToFormattedString();
+        _standartDeviatonA0TextBox!.Text = linearRegressionContainer.InterceptStandardDeviation.ToFormattedString();
+        _trustIntervalA0TextBox!.Text = linearRegressionContainer.InterceptTrustInterval.ToFormattedString();
+        _statisticsA0TextBox!.Text = linearRegressionContainer.InterceptStatistics.ToFormattedString();
+
+        //???
+        _quantileA0TextBox!.Text = linearRegressionContainer.StudentQuantile.ToFormattedString();
+
+        var isA0Zero =
+            Math.Abs(linearRegressionContainer.InterceptStatistics)
+            .IsLessOrEqual(
+            linearRegressionContainer.StudentQuantile);
+
+        _significanceA0TextBox!.Background = isA0Zero
+            ? Constants.OkBrush
+            : Constants.NotOkBrush;
+
+        _significanceA0TextBox!.Text = isA0Zero
+            ? "A0 = 0"
+            : "A0 ≠ 0";
+    }
+
+    private void VisualizeA1(LinearRegressionContainer linearRegressionContainer)
+    {
+        _valueA1TextBox!.Text = linearRegressionContainer.SlopeCoefficient.ToFormattedString();
+        _standartDeviatonA1TextBox!.Text = linearRegressionContainer.SlopeStandardDeviation.ToFormattedString();
+        _trustIntervalA1TextBox!.Text = linearRegressionContainer.SlopeTrustInterval.ToFormattedString();
+        _statisticsA1TextBox!.Text = linearRegressionContainer.SlopeStatistics.ToFormattedString();
+
+        //???
+        _quantileA1TextBox!.Text = linearRegressionContainer.StudentQuantile.ToFormattedString();
+
+        var isA1Zero =
+            Math.Abs(linearRegressionContainer.SlopeStatistics)
+            .IsLessOrEqual(
+            linearRegressionContainer.StudentQuantile);
+
+        _significanceA1TextBox!.Background = isA1Zero
+            ? Constants.OkBrush
+            : Constants.NotOkBrush;
+
+        _significanceA1TextBox!.Text = isA1Zero
+            ? "A1 = 0"
+            : "A1 ≠ 0";
     }
 }

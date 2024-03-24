@@ -9,7 +9,7 @@ public partial class MainWindow : Window
 
     private SelectionContainer? _firstSelectionContainer;
     private SelectionContainer? _secondSelectionContainer;
-    private TwoSelectionsContainer? _twoSelectionsContainer;
+    private LinearRegressionContainer? _linearRegressionContainer;
 
     public MainWindow()
     {
@@ -43,7 +43,9 @@ public partial class MainWindow : Window
             .SetCorellationRatioTextBoxes(CorellationRatioValueTextBox, CorellationRatioStatisticsTextBox, CorellationRatioQuantileTextBox, CorellationRatioFirstConclusionTextBox, CorellationRatioSecondConclusionTextBox)
             .SetSpearmanTextBoxes(SpearmanValueTextBox, SpearmanStatisticsTextBox, SpearmanQuantileTextBox, SpearmanFirstConclusionTextBox, SpearmanSecondConclusionTextBox)
             .SetKendallTextBoxes(KendallValueTextBox, KendallStatisticsTextBox, KendallQuantileTextBox, KendallFirstConclusionTextBox, KendallSecondConclusionTextBox)
-            .SetMainTextBoxes(MainPearsonValueTextBox, MainCorellationRatioValueTextBox, MainStatisticsTextBox, MainQuantileTextBox, MainFirstConclusionTextBox, MainSecondConclusionTextBox);
+            .SetMainTextBoxes(MainPearsonValueTextBox, MainCorellationRatioValueTextBox, MainStatisticsTextBox, MainQuantileTextBox, MainFirstConclusionTextBox, MainSecondConclusionTextBox)
+            .SetA0TextBoxes(ValueA0TextBox, StandartDeviatonA0TextBox, TrustIntervalA0TextBox, StatisticsA0TextBox, QuantileA0TextBox, SignificanceA0TextBox)
+            .SetA1TextBoxes(ValueA1TextBox, StandartDeviatonA1TextBox, TrustIntervalA1TextBox, StatisticsA1TextBox, QuantileA1TextBox, SignificanceA1TextBox);
     }
 
     private void SetOneSelection(SelectionNumber selectionNumber)

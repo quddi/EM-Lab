@@ -14,11 +14,11 @@ public partial class MainWindow
 
         _firstSelectionContainer = new SelectionContainer() { Values = loadResult.Value.Item1 };
         _secondSelectionContainer = new SelectionContainer() { Values = loadResult.Value.Item2 };
-        _twoSelectionsContainer = new TwoSelectionsContainer(false) { FirstSelection = _firstSelectionContainer, SecondSelection = _secondSelectionContainer };
+        _linearRegressionContainer = new LinearRegressionContainer { FirstSelection = _firstSelectionContainer, SecondSelection = _secondSelectionContainer };
 
         SelectionComboBox.SelectedIndex = (int)SelectionNumber.None;
 
-        _twoSelectionsTab!.VisualizeSelections(_twoSelectionsContainer);
+        _twoSelectionsTab!.VisualizeSelections(_linearRegressionContainer);
     }
 
     private void SelectionComboBoxSelectionChangedHandler(object _, SelectionChangedEventArgs __)

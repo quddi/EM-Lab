@@ -39,6 +39,20 @@ public partial class TwoSelectionsTab
     private TextBox? _mainFirstConclusionTextBox;
     private TextBox? _mainSecondConclusionTextBox;
 
+    private TextBox? _valueA0TextBox;
+    private TextBox? _standartDeviatonA0TextBox;
+    private TextBox? _trustIntervalA0TextBox;
+    private TextBox? _statisticsA0TextBox;
+    private TextBox? _quantileA0TextBox;
+    private TextBox? _significanceA0TextBox;
+    
+    private TextBox? _valueA1TextBox;
+    private TextBox? _standartDeviatonA1TextBox;
+    private TextBox? _trustIntervalA1TextBox;
+    private TextBox? _statisticsA1TextBox;
+    private TextBox? _quantileA1TextBox;
+    private TextBox? _significanceA1TextBox;
+
     public TwoSelectionsTab SetCorrelationFieldPlot(WpfPlot correlationFieldPlot)
     {
         _correlationFieldPlot = correlationFieldPlot;
@@ -110,6 +124,34 @@ public partial class TwoSelectionsTab
         _mainQuantileTextBox = mainQuantileTextBox;
         _mainFirstConclusionTextBox = mainFirstConclusionTextBox;
         _mainSecondConclusionTextBox = mainSecondConclusionTextBox;
+
+        return this;
+    }
+
+    public TwoSelectionsTab SetA0TextBoxes(TextBox valueA0TextBox, TextBox standartDeviatonA0TextBox, 
+        TextBox trustIntervalA0TextBox,    TextBox statisticsA0TextBox, TextBox quantileA0TextBox, 
+        TextBox significanceA0TextBox)
+    {
+        _valueA0TextBox = valueA0TextBox;
+        _standartDeviatonA0TextBox = standartDeviatonA0TextBox;
+        _trustIntervalA0TextBox = trustIntervalA0TextBox;
+        _statisticsA0TextBox = statisticsA0TextBox;
+        _quantileA0TextBox = quantileA0TextBox;
+        _significanceA0TextBox = significanceA0TextBox;
+
+        return this;
+    }
+
+    public TwoSelectionsTab SetA1TextBoxes(TextBox valueA1TextBox, TextBox standartDeviatonA1TextBox,
+        TextBox trustIntervalA1TextBox, TextBox statisticsA1TextBox, TextBox quantileA1TextBox,
+        TextBox significanceA1TextBox)
+    {
+        _valueA1TextBox = valueA1TextBox;
+        _standartDeviatonA1TextBox = standartDeviatonA1TextBox;
+        _trustIntervalA1TextBox = trustIntervalA1TextBox;
+        _statisticsA1TextBox = statisticsA1TextBox;
+        _quantileA1TextBox = quantileA1TextBox;
+        _significanceA1TextBox = significanceA1TextBox;
 
         return this;
     }
