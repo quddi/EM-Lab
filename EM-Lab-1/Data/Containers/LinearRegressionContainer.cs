@@ -16,6 +16,7 @@ public class LinearRegressionContainer : TwoSelectionsContainer
     private Interval? _slopeTrustInterval;
 
     private double? _residualsVariance; //S_зал^2
+    private Func<double, double?>? _linearFunction;
 
     public double InterceptCoefficient
     {
@@ -130,6 +131,17 @@ public class LinearRegressionContainer : TwoSelectionsContainer
         }
     }
 
+    public Func<double, double?> LinearFunction
+    {
+        get
+        {
+            if (_linearFunction == null)
+                ComputeLinearFunction();
+
+            return _linearFunction!;
+        }
+    }
+
     public LinearRegressionContainer() : base(isClassifyingReformed: false) { }
 
     #region Computing methods
@@ -170,7 +182,8 @@ public class LinearRegressionContainer : TwoSelectionsContainer
 
     private void ComputeSlopeCoefficient()
     {
-        _slopeCoefficient = PearsonCoefficient * FirstSelection.StandardDeviation / SecondSelection.StandardDeviation;
+        _slopeCoefficient = PearsonCoefficient * SecondSelection.StandardDeviation 
+            / FirstSelection.StandardDeviation;
     }
 
     private void ComputeSlopeVariance()
@@ -208,6 +221,11 @@ public class LinearRegressionContainer : TwoSelectionsContainer
             .Sum(pair => Math.Pow(pair.y - InterceptCoefficient - SlopeCoefficient * pair.x, 2));
 
         _residualsVariance = nominator / denominator;
+    }
+
+    private void ComputeLinearFunction()
+    {
+        _linearFunction = x => InterceptCoefficient + SlopeCoefficient * x;
     }
     #endregion
 }

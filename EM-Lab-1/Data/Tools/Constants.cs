@@ -19,6 +19,8 @@ public static class Constants
     public static readonly Color NotOkColor = Color.FromRgb(255, 164, 161);
     public static readonly Color ActiveColor = Color.FromRgb(204, 204, 204);
     public static readonly Color InactiveColor = Color.FromRgb(121, 121, 121);
+    public static readonly System.Drawing.Color PlotPointsColor = System.Drawing.Color.OrangeRed;
+    public static readonly System.Drawing.Color PlotLineColor = System.Drawing.Color.OrangeRed;
 
     public static readonly Brush OkBrush = new SolidColorBrush(OkColor);
     public static readonly Brush NotOkBrush = new SolidColorBrush(NotOkColor);

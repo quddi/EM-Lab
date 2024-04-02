@@ -61,20 +61,21 @@ public partial class TwoSelectionsTab
         VisualizeLinearRegression(linearRegressionContainer);
     }
 
-    private void VisualizePlot(TwoSelectionsContainer twoSelectionsContainer)
+    private void VisualizePlot(LinearRegressionContainer linearRegressionContainer)
     {
         _correlationFieldPlot!.Plot.Clear();
 
-        var pointsCount = twoSelectionsContainer.FirstSelection.Values.Count;
-        var pointsColor = ExtensionsMethods.GetRandomColor();
+        var pointsCount = linearRegressionContainer.FirstSelection.Values.Count;
 
         for (int i = 0; i < pointsCount; i++)
         {
-            var x = twoSelectionsContainer.FirstSelection.Values[i];
-            var y = twoSelectionsContainer.SecondSelection.Values[i];
+            var x = linearRegressionContainer.FirstSelection.Values[i];
+            var y = linearRegressionContainer.SecondSelection.Values[i];
 
-            _correlationFieldPlot!.Plot.AddPoint(x, y, pointsColor);
+            _correlationFieldPlot!.Plot.AddPoint(x, y, Constants.PlotPointsColor);
         }
+
+        _correlationFieldPlot!.Plot.AddFunction(linearRegressionContainer.LinearFunction, Constants.PlotLineColor);
 
         _correlationFieldPlot?.Refresh();
     }

@@ -4,25 +4,7 @@ namespace EM_Lab_1;
 
 internal static class ExtensionsMethods
 {
-    private static readonly Color[] RandomColorsPool =
-    [
-        Color.Red,
-        Color.Green,
-        Color.Magenta,
-        Color.Cyan,
-        Color.Fuchsia,
-        Color.Firebrick,
-        Color.Coral,
-        Color.IndianRed,
-        Color.HotPink
-    ];
-
     private static readonly Random Random = new();
-
-    public static Color GetRandomColor()
-    {
-        return RandomColorsPool[Random.Next(0, RandomColorsPool.Length)];
-    }
 
     public static T2 GetValue<T1, T2>(this IDictionary<T1, T2> dictionary, T1 key)
     {
