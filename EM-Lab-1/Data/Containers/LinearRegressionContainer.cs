@@ -214,7 +214,7 @@ public class LinearRegressionContainer : TwoSelectionsContainer
 
     private void ComputeResidualsVariance()
     {
-        var denominator = 1.0D / (ElementsCount - 2);
+        var denominator = (ElementsCount - 2);
 
         var nominator = FirstSelection.Values
             .Zip(SecondSelection.Values, (x, y) => (x, y))

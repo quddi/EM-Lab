@@ -209,6 +209,7 @@ public partial class TwoSelectionsTab
     {
         VisualizeA0(linearRegressionContainer);
         VisualizeA1(linearRegressionContainer);
+        VisualizeLinear(linearRegressionContainer);
     }
 
     private void VisualizeA0(LinearRegressionContainer linearRegressionContainer)
@@ -257,5 +258,11 @@ public partial class TwoSelectionsTab
         _significanceA1TextBox!.Text = isA1Zero
             ? "A1 = 0"
             : "A1 ≠ 0";
+    }
+
+    private void VisualizeLinear(LinearRegressionContainer linearRegressionContainer)
+    {
+        _linearResidualVarianceTextBox!.Text = linearRegressionContainer.ResidualsVariance.ToFormattedString();
+        //TODO: Fill other boxes
     }
 }

@@ -45,7 +45,9 @@ public partial class MainWindow : Window
             .SetKendallTextBoxes(KendallValueTextBox, KendallStatisticsTextBox, KendallQuantileTextBox, KendallFirstConclusionTextBox, KendallSecondConclusionTextBox)
             .SetMainTextBoxes(MainPearsonValueTextBox, MainCorellationRatioValueTextBox, MainStatisticsTextBox, MainQuantileTextBox, MainFirstConclusionTextBox, MainSecondConclusionTextBox)
             .SetA0TextBoxes(ValueA0TextBox, StandartDeviatonA0TextBox, TrustIntervalA0TextBox, StatisticsA0TextBox, QuantileA0TextBox, SignificanceA0TextBox)
-            .SetA1TextBoxes(ValueA1TextBox, StandartDeviatonA1TextBox, TrustIntervalA1TextBox, StatisticsA1TextBox, QuantileA1TextBox, SignificanceA1TextBox);
+            .SetA1TextBoxes(ValueA1TextBox, StandartDeviatonA1TextBox, TrustIntervalA1TextBox, StatisticsA1TextBox, QuantileA1TextBox, SignificanceA1TextBox)
+            .SetLinearTextBoxes(LinearResidualVarianceTextBox, LinearDeterminationCoefficientTextBox, LinearFTestStatisticsTextBox, LinearFTestQuantileTextBox, LinearFTestConclusionTextBox, LinearInputXTextBox, LinearComputedRegressionValueTextBox, LinearComputedRegressionTrustIntervalTextBox)
+            .SetNotLinearTextBoxes(NotLinearResidualVarianceTextBox, NotLinearDeterminationCoefficientTextBox, NotLinearFTestStatisticsTextBox, NotLinearFTestQuantileTextBox, NotLinearFTestConclusionTextBox, NotLinearInputXTextBox, NotLinearComputedRegressionValueTextBox, NotLinearComputedRegressionTrustIntervalTextBox);
     }
 
     private void SetOneSelection(SelectionNumber selectionNumber)

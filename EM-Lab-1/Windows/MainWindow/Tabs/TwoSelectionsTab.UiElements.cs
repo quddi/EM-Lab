@@ -53,6 +53,24 @@ public partial class TwoSelectionsTab
     private TextBox? _quantileA1TextBox;
     private TextBox? _significanceA1TextBox;
 
+    private TextBox? _linearResidualVarianceTextBox;
+    private TextBox? _linearDeterminationCoefficientTextBox;
+    private TextBox? _linearFTestStatisticsTextBox;
+    private TextBox? _linearFTestQuantileTextBox;
+    private TextBox? _linearFTestConclusionTextBox;
+    private TextBox? _linearInputXTextBox;
+    private TextBox? _linearComputedRegressionValueTextBox;
+    private TextBox? _linearComputedRegressionTrustIntervalTextBox;
+
+    private TextBox? _notLinearResidualVarianceTextBox;
+    private TextBox? _notLinearDeterminationCoefficientTextBox;
+    private TextBox? _notLinearFTestStatisticsTextBox;
+    private TextBox? _notLinearFTestQuantileTextBox;
+    private TextBox? _notLinearFTestConclusionTextBox;
+    private TextBox? _notLinearInputXTextBox;
+    private TextBox? _notLinearComputedRegressionValueTextBox;
+    private TextBox? _notLinearComputedRegressionTrustIntervalTextBox;
+
     public TwoSelectionsTab SetCorrelationFieldPlot(WpfPlot correlationFieldPlot)
     {
         _correlationFieldPlot = correlationFieldPlot;
@@ -152,6 +170,38 @@ public partial class TwoSelectionsTab
         _statisticsA1TextBox = statisticsA1TextBox;
         _quantileA1TextBox = quantileA1TextBox;
         _significanceA1TextBox = significanceA1TextBox;
+
+        return this;
+    }
+
+    public TwoSelectionsTab SetLinearTextBoxes(TextBox linearResidualVarianceTextBox, TextBox linearDeterminationCoefficientTextBox,
+        TextBox linearFTestStatisticsTextBox, TextBox linearFTestQuantileTextBox, TextBox linearFTestConclusionTextBox,
+        TextBox linearInputXTextBox, TextBox linearComputedRegressionValueTextBox, TextBox linearComputedRegressionTrustIntervalTextBox)
+    {
+        _linearResidualVarianceTextBox = linearResidualVarianceTextBox;
+        _linearDeterminationCoefficientTextBox = linearDeterminationCoefficientTextBox;
+        _linearFTestStatisticsTextBox = linearFTestStatisticsTextBox;
+        _linearFTestQuantileTextBox = linearFTestQuantileTextBox;
+        _linearFTestConclusionTextBox = linearFTestConclusionTextBox;
+        _linearInputXTextBox = linearInputXTextBox;
+        _linearComputedRegressionValueTextBox = linearComputedRegressionValueTextBox;
+        _linearComputedRegressionTrustIntervalTextBox = linearComputedRegressionTrustIntervalTextBox;
+
+        return this;
+    }
+
+    public TwoSelectionsTab SetNotLinearTextBoxes(TextBox notLinearResidualVarianceTextBox, TextBox notLinearDeterminationCoefficientTextBox,
+        TextBox notLinearFTestStatisticsTextBox, TextBox notLinearFTestQuantileTextBox, TextBox notLinearFTestConclusionTextBox,
+        TextBox notLinearInputXTextBox, TextBox notLinearComputedRegressionValueTextBox, TextBox notLinearComputedRegressionTrustIntervalTextBox)
+    {
+        _notLinearResidualVarianceTextBox = notLinearResidualVarianceTextBox;
+        _notLinearDeterminationCoefficientTextBox = notLinearDeterminationCoefficientTextBox;
+        _notLinearFTestStatisticsTextBox = notLinearFTestStatisticsTextBox;
+        _notLinearFTestQuantileTextBox = notLinearFTestQuantileTextBox;
+        _notLinearFTestConclusionTextBox = notLinearFTestConclusionTextBox;
+        _notLinearInputXTextBox = notLinearInputXTextBox;
+        _notLinearComputedRegressionValueTextBox = notLinearComputedRegressionValueTextBox;
+        _notLinearComputedRegressionTrustIntervalTextBox = notLinearComputedRegressionTrustIntervalTextBox;
 
         return this;
     }
