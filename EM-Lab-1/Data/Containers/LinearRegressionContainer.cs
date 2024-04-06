@@ -24,7 +24,7 @@ public class LinearRegressionContainer : TwoSelectionsContainer
     protected Func<double, double?>? _regressionFunction;
     protected Func<double, Interval?>? _regressionTrustIntervalFunction;
 
-    public const int ParametersCount = 2;
+    public virtual int ParametersCount => 2;
 
     public double InterceptCoefficient
     {
