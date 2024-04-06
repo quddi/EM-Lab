@@ -24,6 +24,11 @@ internal static class ExtensionsMethods
         return value.ToString("0.000000");
     }
 
+    public static string ToFormattedString(this double? value)
+    {
+        return value != null ? value.Value.ToFormattedString() : "∅";
+    }
+
     public static string ToFormattedString(this (double LeftEdge, double RightEdge) pair)
     {
         return $"[{pair.LeftEdge.ToFormattedString()}; {pair.RightEdge.ToFormattedString()}]";
@@ -32,6 +37,11 @@ internal static class ExtensionsMethods
     public static string ToFormattedString(this Interval pair)
     {
         return ToFormattedString((pair.LeftEdge, pair.RightEdge));
+    }
+
+    public static string ToFormattedString(this Interval? pair)
+    {
+        return pair != null ? pair.Value.ToFormattedString() : "∅";
     }
 
     public static bool IsEqual(this double a, double b) => Math.Abs(a - b) < Constants.Tolerance;

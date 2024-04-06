@@ -6,6 +6,7 @@ public static class Constants
 {
     private static double? _normalDistributionQuantile;
 
+    public const int ComputedPointsSize = 10;
     public const double Tolerance = 0.00000001;
     public const double Alpha = 0.05;
     public const double C0 = 2.515517;
@@ -19,8 +20,10 @@ public static class Constants
     public static readonly Color NotOkColor = Color.FromRgb(255, 164, 161);
     public static readonly Color ActiveColor = Color.FromRgb(204, 204, 204);
     public static readonly Color InactiveColor = Color.FromRgb(121, 121, 121);
-    public static readonly System.Drawing.Color PlotPointsColor = System.Drawing.Color.OrangeRed;
-    public static readonly System.Drawing.Color PlotLineColor = System.Drawing.Color.OrangeRed;
+    public static readonly System.Drawing.Color PlotPointsColor = System.Drawing.Color.DarkSeaGreen;
+    public static readonly System.Drawing.Color PlotLineColor = System.Drawing.Color.BlueViolet;
+    public static readonly System.Drawing.Color PlotLinearComputingPointColor = System.Drawing.Color.FromArgb(255, 86, 226, 209);
+    public static readonly System.Drawing.Color PlotNotLinearComputingPointColor = System.Drawing.Color.FromArgb(255, 252, 165, 56);
 
     public static readonly Brush OkBrush = new SolidColorBrush(OkColor);
     public static readonly Brush NotOkBrush = new SolidColorBrush(NotOkColor);

@@ -33,4 +33,14 @@ public partial class MainWindow
 
         SetOneSelection((SelectionNumber)SelectionComboBox.SelectedIndex);
     }
+
+    private void OnLinearComputeRegressionButtonClickedHandler(object _, RoutedEventArgs __)
+    {
+        _twoSelectionsTab!.VisualizeLinearComputings(_linearRegressionContainer!);
+    }
+
+    private void OnLinearInputXTextBoxTextChangedHandler(object _, TextChangedEventArgs __)
+    {
+        _twoSelectionsTab?.ClearLinearComputings();
+    }
 }

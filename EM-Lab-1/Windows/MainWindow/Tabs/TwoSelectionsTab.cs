@@ -1,15 +1,67 @@
-﻿using System.Windows.Media;
+﻿using ScottPlot.Plottable;
+using System.Windows;
+using System.Windows.Media;
 
 namespace EM_Lab_1;
 
 public partial class TwoSelectionsTab
 {
+    private MarkerPlot? _linearComputedPoint;
+    private MarkerPlot? _notLinearComputedPoint;
+
     public void VisualizeSelections(LinearRegressionContainer? linearRegressionContainer)
     {
         if (linearRegressionContainer == null)
             VisualizeNoneSelections();
         else
             VisualizeExistingSelections(linearRegressionContainer);
+    }
+
+    public void VisualizeLinearComputings(LinearRegressionContainer linearRegressionContainer)
+    {
+        if (!double.TryParse(_linearInputXTextBox!.Text, out double x))
+        {
+            MessageBox.Show("Не вдалося зчитати х! (лінійна регресія)");
+            return;
+        }
+
+        var y = linearRegressionContainer.LinearFunction(x);
+        var yTrustInterval = linearRegressionContainer.TrustIntervalFunction(x);
+
+        _linearComputedRegressionValueTextBox!.Text = y.ToFormattedString();
+        _linearComputedRegressionTrustIntervalTextBox!.Text = yTrustInterval.ToFormattedString();
+
+        if (y != null)
+        {
+            _linearComputedPoint = _correlationFieldPlot!.Plot.AddPoint(x, y.Value, 
+                Constants.PlotLinearComputingPointColor, size: Constants.ComputedPointsSize);
+
+            _correlationFieldPlot!.Refresh();
+        }
+    }
+
+    public void ClearLinearComputings()
+    {
+        _linearComputedRegressionValueTextBox!.Text = string.Empty;
+        _linearComputedRegressionTrustIntervalTextBox!.Text = string.Empty;
+        
+        if (_linearComputedPoint != null)
+        {
+            _correlationFieldPlot!.Plot.Remove(_linearComputedPoint);
+            _correlationFieldPlot!.Refresh();
+            _linearComputedPoint = null;
+        }
+    }
+
+    public void VisualizeNotLinearComputings()
+    {
+        //TODO
+    }
+
+    public void ClearNotLinearComputings()
+    {
+        _notLinearComputedRegressionValueTextBox!.Text = string.Empty;
+        _notLinearComputedRegressionTrustIntervalTextBox!.Text = string.Empty;
     }
 
     private void VisualizeNoneSelections()
@@ -48,6 +100,9 @@ public partial class TwoSelectionsTab
         _mainQuantileTextBox!.Text = string.Empty;
         _mainFirstConclusionTextBox!.Text = string.Empty;
         _mainSecondConclusionTextBox!.Text = string.Empty;
+
+        ClearLinearComputings();
+        ClearNotLinearComputings();
     }
 
     private void VisualizeExistingSelections(LinearRegressionContainer linearRegressionContainer)
@@ -263,6 +318,25 @@ public partial class TwoSelectionsTab
     private void VisualizeLinear(LinearRegressionContainer linearRegressionContainer)
     {
         _linearResidualVarianceTextBox!.Text = linearRegressionContainer.ResidualsVariance.ToFormattedString();
+        _linearDeterminationCoefficientTextBox!.Text = linearRegressionContainer.DeterminationCoefficient.ToFormattedString();
+        _linearFTestStatisticsTextBox!.Text = linearRegressionContainer.FTestStatistics.ToFormattedString();
+
+        var quantile = linearRegressionContainer.FisherQuantile;
+
+        _linearFTestQuantileTextBox!.Text = quantile.ToFormattedString();
+
+        var significant = linearRegressionContainer.FTestStatistics > quantile;
+
+        _linearFTestConclusionTextBox!.Background = significant
+            ? Constants.OkBrush 
+            : Constants.NotOkBrush;
+
+        _linearFTestConclusionTextBox!.Text = significant
+            ? "Регресія значуща"
+            : "Регресія незначуща";
+
         //TODO: Fill other boxes
     }
+
+
 }
