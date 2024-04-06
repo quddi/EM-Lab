@@ -3,26 +3,26 @@ namespace EM_Lab_1;
 
 public class LinearRegressionContainer : TwoSelectionsContainer
 {
-    private double? _interceptCoefficient;  //a0
-    private double? _interceptVariance;
-    private double? _interceptStandardDeviation;
-    private double? _interceptStatistics;
-    private Interval? _interceptTrustInterval;
+    protected double? _interceptCoefficient;  //a0
+    protected double? _interceptVariance;
+    protected double? _interceptStandardDeviation;
+    protected double? _interceptStatistics;
+    protected Interval? _interceptTrustInterval;
 
-    private double? _slopeCoefficient;      //a1
-    private double? _slopeVariance;
-    private double? _slopeStandardDeviation;
-    private double? _slopeStatistics;
-    private Interval? _slopeTrustInterval;
+    protected double? _slopeCoefficient;      //a1
+    protected double? _slopeVariance;
+    protected double? _slopeStandardDeviation;
+    protected double? _slopeStatistics;
+    protected Interval? _slopeTrustInterval;
 
-    private double? _fTestStatistics;
+    protected double? _fTestStatistics;
 
-    private double? _residualsVariance; //S_зал^2
-    private double? _determinationCoefficient; //R^2
-    private double? _sse;
-    private double? _sseConst;
-    private Func<double, double?>? _linearFunction;
-    private Func<double, Interval?>? _trustIntervalFunction;
+    protected double? _residualsVariance; //S_зал^2
+    protected double? _determinationCoefficient; //R^2
+    protected double? _sse;
+    protected double? _sseConst;
+    protected Func<double, double?>? _regressionFunction;
+    protected Func<double, Interval?>? _regressionTrustIntervalFunction;
 
     public const int ParametersCount = 2;
 
@@ -183,37 +183,37 @@ public class LinearRegressionContainer : TwoSelectionsContainer
         }
     }
 
-    public Func<double, double?> LinearFunction
+    public Func<double, double?> RegressionFunction
     {
         get
         {
-            if (_linearFunction == null)
-                ComputeLinearFunction();
+            if (_regressionFunction == null)
+                ComputeRegressionFunction();
 
-            return _linearFunction!;
+            return _regressionFunction!;
         }
     }
 
-    public Func<double, Interval?> TrustIntervalFunction
+    public Func<double, Interval?> RegressionTrustIntervalFunction
     {
         get
         {
-            if (_trustIntervalFunction == null)
-                ComputeTrustIntervalFunction();
+            if (_regressionTrustIntervalFunction == null)
+                ComputeRegressionTrustIntervalFunction();
 
-            return _trustIntervalFunction!;
+            return _regressionTrustIntervalFunction!;
         }
     }
 
     public LinearRegressionContainer() : base(isClassifyingReformed: false) { }
 
     #region Computing methods
-    private void ComputeInterceptCoefficient()
+    protected virtual void ComputeInterceptCoefficient()
     {
         _interceptCoefficient = SecondSelection.Mean - SlopeCoefficient * FirstSelection.Mean;
     }
 
-    private void ComputeInterceptVariance()
+    protected virtual void ComputeInterceptVariance()
     {
         var firstApplication = 1D / ElementsCount;
 
@@ -222,17 +222,17 @@ public class LinearRegressionContainer : TwoSelectionsContainer
         _interceptVariance = ResidualsVariance * (firstApplication + secondApplication);
     }
 
-    private void ComputeInterceptStandardDeviation()
+    protected virtual void ComputeInterceptStandardDeviation()
     {
         _interceptStandardDeviation = Math.Sqrt(InterceptVariance);
     }
 
-    private void ComputeInterceptStatistics()
+    protected virtual void ComputeInterceptStatistics()
     {
         _interceptStatistics = InterceptCoefficient / InterceptStandardDeviation;
     }
 
-    private void ComputeInterceptTrustInterval()
+    protected virtual void ComputeInterceptTrustInterval()
     {
         var sqrt = Math.Sqrt(InterceptVariance);
 
@@ -243,28 +243,28 @@ public class LinearRegressionContainer : TwoSelectionsContainer
         };
     }
 
-    private void ComputeSlopeCoefficient()
+    protected virtual void ComputeSlopeCoefficient()
     {
         _slopeCoefficient = PearsonCoefficient * SecondSelection.StandardDeviation 
             / FirstSelection.StandardDeviation;
     }
 
-    private void ComputeSlopeVariance()
+    protected virtual void ComputeSlopeVariance()
     {
         _slopeVariance = ResidualsVariance / (ElementsCount * FirstSelection.Variance);
     }
 
-    private void ComputeSlopeStandardDeviation()
+    protected virtual void ComputeSlopeStandardDeviation()
     {
         _slopeStandardDeviation = Math.Sqrt(SlopeVariance);
     }
 
-    private void ComputeSlopeStatistics()
+    protected virtual void ComputeSlopeStatistics()
     {
         _slopeStatistics = SlopeCoefficient / SlopeStandardDeviation;
     }
 
-    private void ComputeSlopeTrustInterval()
+    protected virtual void ComputeSlopeTrustInterval()
     {
         var sqrt = Math.Sqrt(SlopeVariance);
 
@@ -275,7 +275,7 @@ public class LinearRegressionContainer : TwoSelectionsContainer
         };
     }
 
-    private void ComputeFTestStatistics()
+    protected virtual void ComputeFTestStatistics()
     {
         var nominator = (SSEConst - SSE) / (ParametersCount - 1);
         var denominator = SSE / (ElementsCount - ParametersCount);
@@ -283,7 +283,7 @@ public class LinearRegressionContainer : TwoSelectionsContainer
         _fTestStatistics = nominator / denominator;
     }
 
-    private void ComputeResidualsVariance()
+    protected virtual void ComputeResidualsVariance()
     {
         var denominator = (ElementsCount - 2);
 
@@ -294,7 +294,7 @@ public class LinearRegressionContainer : TwoSelectionsContainer
         _residualsVariance = nominator / denominator;
     }
 
-    private void ComputeDeterminationCoefficient()
+    protected virtual void ComputeDeterminationCoefficient()
     {
         var nominator = (ElementsCount - ParametersCount) * ResidualsVariance;
         var demonimator = (ElementsCount - 1) * SecondSelection.Variance;
@@ -302,29 +302,29 @@ public class LinearRegressionContainer : TwoSelectionsContainer
         _determinationCoefficient = 1 - nominator / demonimator;
     }
 
-    private void ComputeSSE()
+    protected virtual void ComputeSSE()
     {
         _sse = FirstSelection.Values
             .Zip(SecondSelection.Values, (x, y) => (x, y))
-            .Sum(pair => Math.Pow(pair.y - LinearFunction(pair.x)!.Value, 2));
+            .Sum(pair => Math.Pow(pair.y - RegressionFunction(pair.x)!.Value, 2));
     }
 
-    private void ComputeSSEConst()
+    protected virtual void ComputeSSEConst()
     {
         _sseConst = SecondSelection.Values
             .Sum(y => Math.Pow(y - SecondSelection.Mean, 2));
     }
 
-    private void ComputeLinearFunction()
+    protected virtual void ComputeRegressionFunction()
     {
-        _linearFunction = x => InterceptCoefficient + SlopeCoefficient * x;
+        _regressionFunction = x => InterceptCoefficient + SlopeCoefficient * x;
     }
 
-    private void ComputeTrustIntervalFunction()
+    protected virtual void ComputeRegressionTrustIntervalFunction()
     {
-        _trustIntervalFunction = x => new Interval(
-            LinearFunction(x)!.Value - StudentQuantile * Math.Sqrt(ResidualsVariance),
-            LinearFunction(x)!.Value + StudentQuantile * Math.Sqrt(ResidualsVariance)
+        _regressionTrustIntervalFunction = x => new Interval(
+            RegressionFunction(x)!.Value - StudentQuantile * Math.Sqrt(ResidualsVariance),
+            RegressionFunction(x)!.Value + StudentQuantile * Math.Sqrt(ResidualsVariance)
             );
     }
     #endregion

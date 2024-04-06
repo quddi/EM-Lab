@@ -10,7 +10,6 @@ public partial class OneSelectionTab
             SetTextBoxesEmpty();
         else
             VisualizeExistingSelection(container);
-
     }
 
     private void SetTextBoxesEmpty()

@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using MathNet.Numerics.LinearAlgebra;
+using System.Windows.Media;
 
 namespace EM_Lab_1;
 
@@ -27,6 +28,9 @@ public static class Constants
 
     public static readonly Brush OkBrush = new SolidColorBrush(OkColor);
     public static readonly Brush NotOkBrush = new SolidColorBrush(NotOkColor);
+
+    public static readonly MatrixBuilder<double> MatrixBuilder = Matrix<double>.Build;
+    public static readonly VectorBuilder<double> VectorBuilder = Vector<double>.Build;
 
     public static double NormalDistributionQuantile
     {

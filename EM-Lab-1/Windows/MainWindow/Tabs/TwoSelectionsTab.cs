@@ -25,8 +25,8 @@ public partial class TwoSelectionsTab
             return;
         }
 
-        var y = linearRegressionContainer.LinearFunction(x);
-        var yTrustInterval = linearRegressionContainer.TrustIntervalFunction(x);
+        var y = linearRegressionContainer.RegressionFunction(x);
+        var yTrustInterval = linearRegressionContainer.RegressionTrustIntervalFunction(x);
 
         _linearComputedRegressionValueTextBox!.Text = y.ToFormattedString();
         _linearComputedRegressionTrustIntervalTextBox!.Text = yTrustInterval.ToFormattedString();
@@ -130,7 +130,7 @@ public partial class TwoSelectionsTab
             _correlationFieldPlot!.Plot.AddPoint(x, y, Constants.PlotPointsColor);
         }
 
-        _correlationFieldPlot!.Plot.AddFunction(linearRegressionContainer.LinearFunction, Constants.PlotLineColor);
+        _correlationFieldPlot!.Plot.AddFunction(linearRegressionContainer.RegressionFunction, Constants.PlotLineColor);
 
         _correlationFieldPlot?.Refresh();
     }
