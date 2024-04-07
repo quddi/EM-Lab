@@ -1,4 +1,6 @@
 ﻿
+using System.DirectoryServices.ActiveDirectory;
+
 namespace EM_Lab_1;
 
 public class LinearRegressionContainer : TwoSelectionsContainer
@@ -108,19 +110,14 @@ public class LinearRegressionContainer : TwoSelectionsContainer
     #region Computing methods
     protected virtual void ComputeParametersContainers()
     {
-        _parameterContainers = new RegressionParameterContainer[ElementsCount];
+        _parameterContainers = new RegressionParameterContainer[ParametersCount];
 
-        _parameterContainers[1] = new()
-        {
-            Value = PearsonCoefficient * SecondSelection.StandardDeviation / FirstSelection.StandardDeviation,
-            Variance = ResidualsVariance / (ElementsCount * FirstSelection.Variance)
-        };
+        _parameterContainers[1] = new() { Value = PearsonCoefficient * SecondSelection.StandardDeviation / FirstSelection.StandardDeviation };
 
-        _parameterContainers[0] = new()
-        {
-            Value = SecondSelection.Mean - _parameterContainers[1].Value * FirstSelection.Mean,
-            Variance = ResidualsVariance * (1D / ElementsCount + Math.Pow(FirstSelection.Mean, 2) / (ElementsCount * FirstSelection.Variance))
-        };
+        _parameterContainers[0] = new() { Value = SecondSelection.Mean - _parameterContainers[1].Value * FirstSelection.Mean };
+
+        _parameterContainers[0].Variance = ResidualsVariance / (ElementsCount * FirstSelection.Variance);
+        _parameterContainers[1].Variance = ResidualsVariance * (1D / ElementsCount + Math.Pow(FirstSelection.Mean, 2) / (ElementsCount * FirstSelection.Variance));
     }
 
     protected virtual void ComputeFTestStatistics()

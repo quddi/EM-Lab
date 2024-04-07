@@ -8,7 +8,7 @@ public class RegressionParameterContainer
     private Interval? _trustInterval;
 
     public double Value { get; init; }
-    public double Variance { get; init; }
+    public double Variance { get; set; }
 
     public double StandardDeviation
     {

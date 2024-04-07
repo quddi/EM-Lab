@@ -8,12 +8,12 @@ public partial class TwoSelectionsTab
     private MarkerPlot? _linearComputedPoint;
     private MarkerPlot? _notLinearComputedPoint;
 
-    public void VisualizeSelections(LinearRegressionContainer? linearRegressionContainer)
+    public void VisualizeSelections(LinearRegressionContainer? linearRegressionContainer, NotLinearRegressionContainer? notLinearRegressionContainer)
     {
-        if (linearRegressionContainer == null)
+        if (linearRegressionContainer == null || notLinearRegressionContainer == null)
             VisualizeNoneSelections();
         else
-            VisualizeExistingSelections(linearRegressionContainer);
+            VisualizeExistingSelections(linearRegressionContainer, notLinearRegressionContainer);
     }
 
     public void VisualizeLinearComputings(LinearRegressionContainer linearRegressionContainer)
@@ -33,7 +33,7 @@ public partial class TwoSelectionsTab
         if (y != null)
         {
             _linearComputedPoint = _correlationFieldPlot!.Plot.AddPoint(x, y.Value, 
-                Constants.PlotLinearComputingPointColor, size: Constants.ComputedPointsSize);
+                Constants.PlotLinearComputedPointColor, size: Constants.ComputedPointsSize);
 
             _correlationFieldPlot!.Refresh();
         }
@@ -52,15 +52,40 @@ public partial class TwoSelectionsTab
         }
     }
 
-    public void VisualizeNotLinearComputings()
+    public void VisualizeNotLinearComputings(NotLinearRegressionContainer notLinearRegressionContainer)
     {
-        //TODO
+        if (!double.TryParse(_notLinearInputXTextBox!.Text, out double x))
+        {
+            MessageBox.Show("Не вдалося зчитати х! (нелінійна регресія)");
+            return;
+        }
+
+        var y = notLinearRegressionContainer.RegressionFunction(x);
+        var yTrustInterval = notLinearRegressionContainer.RegressionTrustIntervalFunction(x);
+
+        _notLinearComputedRegressionValueTextBox!.Text = y.ToFormattedString();
+        _notLinearComputedRegressionTrustIntervalTextBox!.Text = yTrustInterval.ToFormattedString();
+
+        if (y != null)
+        {
+            _notLinearComputedPoint = _correlationFieldPlot!.Plot.AddPoint(x, y.Value,
+                Constants.PlotNotLinearComputedPointColor, size: Constants.ComputedPointsSize);
+
+            _correlationFieldPlot!.Refresh();
+        }
     }
 
     public void ClearNotLinearComputings()
     {
         _notLinearComputedRegressionValueTextBox!.Text = string.Empty;
         _notLinearComputedRegressionTrustIntervalTextBox!.Text = string.Empty;
+
+        if (_notLinearComputedPoint != null)
+        {
+            _correlationFieldPlot!.Plot.Remove(_notLinearComputedPoint);
+            _correlationFieldPlot!.Refresh();
+            _notLinearComputedPoint = null;
+        }
     }
 
     private void VisualizeNoneSelections()
@@ -104,18 +129,19 @@ public partial class TwoSelectionsTab
         ClearNotLinearComputings();
     }
 
-    private void VisualizeExistingSelections(LinearRegressionContainer linearRegressionContainer)
+    private void VisualizeExistingSelections(LinearRegressionContainer linearRegressionContainer, NotLinearRegressionContainer notLinearRegressionContainer)
     {
-        VisualizePlot(linearRegressionContainer);
+        VisualizePlot(linearRegressionContainer, notLinearRegressionContainer);
         VisualizePearson(linearRegressionContainer);
         VisualizeCorellationRation(linearRegressionContainer);
         VisualizeSpearman(linearRegressionContainer);
         VisualizeKendall(linearRegressionContainer);
         VisualizeMain(linearRegressionContainer);
         VisualizeLinearRegression(linearRegressionContainer);
+        VisualizeNotLinearRegression(notLinearRegressionContainer);
     }
 
-    private void VisualizePlot(LinearRegressionContainer linearRegressionContainer)
+    private void VisualizePlot(LinearRegressionContainer linearRegressionContainer, NotLinearRegressionContainer notLinearRegressionContainer)
     {
         _correlationFieldPlot!.Plot.Clear();
 
@@ -129,7 +155,8 @@ public partial class TwoSelectionsTab
             _correlationFieldPlot!.Plot.AddPoint(x, y, Constants.PlotPointsColor);
         }
 
-        _correlationFieldPlot!.Plot.AddFunction(linearRegressionContainer.RegressionFunction, Constants.PlotLineColor);
+        _correlationFieldPlot!.Plot.AddFunction(linearRegressionContainer.RegressionFunction, Constants.PlotLinearColor);
+        _correlationFieldPlot!.Plot.AddFunction(notLinearRegressionContainer.RegressionFunction, Constants.PlotNotLinearColor);
 
         _correlationFieldPlot?.Refresh();
     }
@@ -265,6 +292,12 @@ public partial class TwoSelectionsTab
         VisualizeLinear(linearRegressionContainer);
     }
 
+    private void VisualizeNotLinearRegression(NotLinearRegressionContainer notLinearRegressionContainer)
+    {
+        VisualizeNotLinearParameters(notLinearRegressionContainer);
+        VisualizeNotLinear(notLinearRegressionContainer);
+    }
+
     private void VisualizeLinearParameters(LinearRegressionContainer linearRegressionContainer)
     {
         for (int i = 0; i < linearRegressionContainer.ParametersCount; i++)
@@ -312,5 +345,54 @@ public partial class TwoSelectionsTab
             : "Регресія незначуща";
 
         //TODO: Fill other boxes
+    }
+
+    private void VisualizeNotLinearParameters(NotLinearRegressionContainer notLinearRegressionContainer)
+    {
+        for (int i = 0; i < notLinearRegressionContainer.ParametersCount; i++)
+        {
+            _notLinearParametersValuesTextBoxes[i]!.Text = notLinearRegressionContainer.ParameterContainers[i].Value.ToFormattedString();
+            _notLinearStandartDeviatonsTextBoxes[i]!.Text = notLinearRegressionContainer.ParameterContainers[i].StandardDeviation.ToFormattedString();
+            _notLinearTrustIntervalsTextBoxes[i]!.Text = notLinearRegressionContainer.ParameterContainers[i].TrustInterval.ToFormattedString();
+            _notLinearStatisticsTextBoxes[i]!.Text = notLinearRegressionContainer.ParameterContainers[i].Statistics.ToFormattedString();
+
+            _notLinearQuantilesTextBoxes[i]!.Text = notLinearRegressionContainer.StudentQuantile.ToFormattedString();
+
+            var isParameterZero =
+                Math.Abs(notLinearRegressionContainer.ParameterContainers[i].Statistics)
+                .IsLessOrEqual(
+                notLinearRegressionContainer.StudentQuantile);
+
+            _notLinearSignificancesTextBoxes[i]!.Background = isParameterZero
+                ? Constants.OkBrush
+                : Constants.NotOkBrush;
+
+            _notLinearSignificancesTextBoxes[i]!.Text = isParameterZero
+                ? $"{Constants.NotLinearParametersNames[i]} = 0"
+                : $"{Constants.NotLinearParametersNames[i]} ≠ 0";
+        }
+    }
+
+    private void VisualizeNotLinear(NotLinearRegressionContainer notLinearRegressionContainer)
+    {
+        _notLinearResidualVarianceTextBox!.Text = notLinearRegressionContainer.ResidualsVariance.ToFormattedString();
+        _notLinearDeterminationCoefficientTextBox!.Text = notLinearRegressionContainer.DeterminationCoefficient.ToFormattedString();
+        _notLinearFTestStatisticsTextBox!.Text = notLinearRegressionContainer.FTestStatistics.ToFormattedString();
+
+        //TODO: override FTest comptuings
+
+        var quantile = notLinearRegressionContainer.FisherQuantile;
+
+        _notLinearFTestQuantileTextBox!.Text = quantile.ToFormattedString();
+
+        var significant = notLinearRegressionContainer.FTestStatistics > quantile;
+
+        _notLinearFTestConclusionTextBox!.Background = significant
+            ? Constants.OkBrush
+            : Constants.NotOkBrush;
+
+        _notLinearFTestConclusionTextBox!.Text = significant
+            ? "Регресія значуща"
+            : "Регресія незначуща";
     }
 }

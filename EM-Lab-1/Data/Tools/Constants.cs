@@ -21,16 +21,19 @@ public static class Constants
     public static readonly Color NotOkColor = Color.FromRgb(255, 164, 161);
     public static readonly Color ActiveColor = Color.FromRgb(204, 204, 204);
     public static readonly Color InactiveColor = Color.FromRgb(121, 121, 121);
-    public static readonly System.Drawing.Color PlotPointsColor = System.Drawing.Color.DarkSeaGreen;
-    public static readonly System.Drawing.Color PlotLineColor = System.Drawing.Color.BlueViolet;
-    public static readonly System.Drawing.Color PlotLinearComputingPointColor = System.Drawing.Color.FromArgb(255, 86, 226, 209);
-    public static readonly System.Drawing.Color PlotNotLinearComputingPointColor = System.Drawing.Color.FromArgb(255, 252, 165, 56);
+    public static readonly System.Drawing.Color PlotPointsColor = System.Drawing.Color.DarkRed;
+    public static readonly System.Drawing.Color PlotLinearColor = System.Drawing.Color.FromArgb(255, 200, 78, 195);
+    public static readonly System.Drawing.Color PlotNotLinearColor = System.Drawing.Color.FromArgb(255, 78, 200, 83);
+    public static readonly System.Drawing.Color PlotLinearComputedPointColor = System.Drawing.Color.FromArgb(255, 86, 226, 209);
+    public static readonly System.Drawing.Color PlotNotLinearComputedPointColor = System.Drawing.Color.FromArgb(255, 252, 165, 56);
 
     public static readonly Brush OkBrush = new SolidColorBrush(OkColor);
     public static readonly Brush NotOkBrush = new SolidColorBrush(NotOkColor);
 
     public static readonly MatrixBuilder<double> MatrixBuilder = Matrix<double>.Build;
     public static readonly VectorBuilder<double> VectorBuilder = Vector<double>.Build;
+
+    public static readonly string[] NotLinearParametersNames = ["A", "B", "C"];
 
     public static double NormalDistributionQuantile
     {

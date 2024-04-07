@@ -46,6 +46,13 @@ public partial class TwoSelectionsTab
     private TextBox?[] _linearQuantilesTextBoxes = new TextBox?[2];
     private TextBox?[] _linearSignificancesTextBoxes = new TextBox?[2];
 
+    private TextBox?[] _notLinearParametersValuesTextBoxes = new TextBox?[3];
+    private TextBox?[] _notLinearStandartDeviatonsTextBoxes = new TextBox?[3];
+    private TextBox?[] _notLinearTrustIntervalsTextBoxes = new TextBox?[3];
+    private TextBox?[] _notLinearStatisticsTextBoxes = new TextBox?[3];
+    private TextBox?[] _notLinearQuantilesTextBoxes = new TextBox?[3];
+    private TextBox?[] _notLinearSignificancesTextBoxes = new TextBox?[3];
+
     private TextBox? _linearResidualVarianceTextBox;
     private TextBox? _linearDeterminationCoefficientTextBox;
     private TextBox? _linearFTestStatisticsTextBox;
@@ -163,6 +170,48 @@ public partial class TwoSelectionsTab
         _linearStatisticsTextBoxes[1] = statisticsA1TextBox;
         _linearQuantilesTextBoxes[1] = quantileA1TextBox;
         _linearSignificancesTextBoxes[1] = significanceA1TextBox;
+
+        return this;
+    }
+
+    public TwoSelectionsTab SetATextBoxes(TextBox valueATextBox, TextBox standartDeviatonATextBox,
+        TextBox trustIntervalATextBox, TextBox statisticsATextBox, TextBox quantileATextBox,
+        TextBox significanceATextBox)
+    {
+        _notLinearParametersValuesTextBoxes[0] = valueATextBox;
+        _notLinearStandartDeviatonsTextBoxes[0] = standartDeviatonATextBox;
+        _notLinearTrustIntervalsTextBoxes[0] = trustIntervalATextBox;
+        _notLinearStatisticsTextBoxes[0] = statisticsATextBox;
+        _notLinearQuantilesTextBoxes[0] = quantileATextBox;
+        _notLinearSignificancesTextBoxes[0] = significanceATextBox;
+
+        return this;
+    }
+
+    public TwoSelectionsTab SetBTextBoxes(TextBox valueBTextBox, TextBox standartDeviatonBTextBox,
+        TextBox trustIntervalBTextBox, TextBox statisticsBTextBox, TextBox quantileBTextBox,
+        TextBox significanceBTextBox)
+    {
+        _notLinearParametersValuesTextBoxes[1] = valueBTextBox;
+        _notLinearStandartDeviatonsTextBoxes[1] = standartDeviatonBTextBox;
+        _notLinearTrustIntervalsTextBoxes[1] = trustIntervalBTextBox;
+        _notLinearStatisticsTextBoxes[1] = statisticsBTextBox;
+        _notLinearQuantilesTextBoxes[1] = quantileBTextBox;
+        _notLinearSignificancesTextBoxes[1] = significanceBTextBox;
+
+        return this;
+    }
+
+    public TwoSelectionsTab SetCTextBoxes(TextBox valueCTextBox, TextBox standartDeviatonCTextBox,
+        TextBox trustIntervalCTextBox, TextBox statisticsCTextBox, TextBox quantileCTextBox,
+        TextBox significanceCTextBox)
+    {
+        _notLinearParametersValuesTextBoxes[2] = valueCTextBox;
+        _notLinearStandartDeviatonsTextBoxes[2] = standartDeviatonCTextBox;
+        _notLinearTrustIntervalsTextBoxes[2] = trustIntervalCTextBox;
+        _notLinearStatisticsTextBoxes[2] = statisticsCTextBox;
+        _notLinearQuantilesTextBoxes[2] = quantileCTextBox;
+        _notLinearSignificancesTextBoxes[2] = significanceCTextBox;
 
         return this;
     }

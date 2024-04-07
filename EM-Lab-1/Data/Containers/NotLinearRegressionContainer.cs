@@ -63,7 +63,7 @@ public class NotLinearRegressionContainer : LinearRegressionContainer
 
         for (int i = 0; i < ParametersCount; i++)
         {
-            Matrix<double> matrix = null!;
+            Matrix<double> matrix = Constants.MatrixBuilder.DenseDiagonal(3, 3, 0);
             
             AMatrix.CopyTo(matrix);
 
@@ -81,12 +81,10 @@ public class NotLinearRegressionContainer : LinearRegressionContainer
         var determinant = AMatrix.Determinant();
 
         for (int i = 0; i < ParametersCount; i++)
-        {
-            var parameter = Deltas[i];
-            var variance = VariancesMatrix[i, i];
+            _parameterContainers[i] = new() { Value = Deltas[i] / determinant };
 
-            _parameterContainers[i] = new() { Value = parameter, Variance = variance };
-        }
+        for (int i = 0; i < ParametersCount; i++)
+            _parameterContainers[i].Variance = VariancesMatrix[i, i];
     }
 
     private void ComputeAMatrix()
@@ -131,6 +129,14 @@ public class NotLinearRegressionContainer : LinearRegressionContainer
     private void ComputeVariancesMatrix()
     {
         _variancesMatrix = ResidualsVariance * AMatrix.Inverse();
+    }
+
+    protected override void ComputeRegressionFunction()
+    {
+        _regressionFunction = x => 
+            ParameterContainers[0].Value + 
+            ParameterContainers[1].Value * x +
+            ParameterContainers[2].Value * x * x;
     }
     #endregion
 }

@@ -10,6 +10,7 @@ public partial class MainWindow : Window
     private SelectionContainer? _firstSelectionContainer;
     private SelectionContainer? _secondSelectionContainer;
     private LinearRegressionContainer? _linearRegressionContainer;
+    private NotLinearRegressionContainer? _notLinearRegressionContainer;
 
     public MainWindow()
     {
@@ -46,6 +47,9 @@ public partial class MainWindow : Window
             .SetMainTextBoxes(MainPearsonValueTextBox, MainCorellationRatioValueTextBox, MainStatisticsTextBox, MainQuantileTextBox, MainFirstConclusionTextBox, MainSecondConclusionTextBox)
             .SetA0TextBoxes(ValueA0TextBox, StandartDeviatonA0TextBox, TrustIntervalA0TextBox, StatisticsA0TextBox, QuantileA0TextBox, SignificanceA0TextBox)
             .SetA1TextBoxes(ValueA1TextBox, StandartDeviatonA1TextBox, TrustIntervalA1TextBox, StatisticsA1TextBox, QuantileA1TextBox, SignificanceA1TextBox)
+            .SetATextBoxes(ValueATextBox, StandartDeviatonATextBox, TrustIntervalATextBox, StatisticsATextBox, QuantileATextBox, SignificanceATextBox)
+            .SetBTextBoxes(ValueBTextBox, StandartDeviatonBTextBox, TrustIntervalBTextBox, StatisticsBTextBox, QuantileBTextBox, SignificanceBTextBox)
+            .SetCTextBoxes(ValueCTextBox, StandartDeviatonCTextBox, TrustIntervalСTextBox, StatisticsCTextBox, QuantileCTextBox, SignificanceCTextBox)
             .SetLinearTextBoxes(LinearResidualVarianceTextBox, LinearDeterminationCoefficientTextBox, LinearFTestStatisticsTextBox, LinearFTestQuantileTextBox, LinearFTestConclusionTextBox, LinearInputXTextBox, LinearComputedRegressionValueTextBox, LinearComputedRegressionTrustIntervalTextBox)
             .SetNotLinearTextBoxes(NotLinearResidualVarianceTextBox, NotLinearDeterminationCoefficientTextBox, NotLinearFTestStatisticsTextBox, NotLinearFTestQuantileTextBox, NotLinearFTestConclusionTextBox, NotLinearInputXTextBox, NotLinearComputedRegressionValueTextBox, NotLinearComputedRegressionTrustIntervalTextBox);
     }
