@@ -81,7 +81,7 @@ public class NotLinearRegressionContainer : LinearRegressionContainer
         var determinant = AMatrix.Determinant();
 
         for (int i = 0; i < ParametersCount; i++)
-            _parameterContainers[i] = new() { Value = Deltas[i] / determinant };
+            _parameterContainers[i] = new(StudentQuantile) { Value = Deltas[i] / determinant };
 
         for (int i = 0; i < ParametersCount; i++)
             _parameterContainers[i].Variance = VariancesMatrix[i, i];
@@ -137,6 +137,10 @@ public class NotLinearRegressionContainer : LinearRegressionContainer
             ParameterContainers[0].Value + 
             ParameterContainers[1].Value * x +
             ParameterContainers[2].Value * x * x;
+    }
+    protected override void ComputeDeterminationCoefficient()
+    {
+        _determinationCoefficient = 1D - ResidualsVariance / SecondSelection.Variance;
     }
     #endregion
 }

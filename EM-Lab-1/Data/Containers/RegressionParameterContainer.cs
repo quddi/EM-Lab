@@ -2,13 +2,18 @@
 
 public class RegressionParameterContainer
 {
+    private double _studentQuantile;
+
     private double? _standardDeviation;
     private double? _statistics;
+    private bool? _isSignificant;
 
     private Interval? _trustInterval;
 
     public double Value { get; init; }
     public double Variance { get; set; }
+
+    public double ResultValue => IsSignificant ? Value : 0;
 
     public double StandardDeviation
     {
@@ -32,6 +37,17 @@ public class RegressionParameterContainer
         }
     }
 
+    public bool IsSignificant
+    {
+        get
+        {
+            if (_isSignificant == null)
+                ComputeIsSignificant();
+
+            return _isSignificant!.Value;
+        }
+    }
+
     public Interval TrustInterval
     {
         get
@@ -43,6 +59,11 @@ public class RegressionParameterContainer
         }
     }
 
+    public RegressionParameterContainer(double studentQuantile)
+    {
+        _studentQuantile = studentQuantile; 
+    }
+
     private void ComputeStandardDeviation()
     {
         _standardDeviation = Math.Sqrt(Variance);
@@ -51,6 +72,11 @@ public class RegressionParameterContainer
     private void ComputeStatistics()
     {
         _statistics = Value / Math.Sqrt(Variance);
+    }
+
+    private void ComputeIsSignificant()
+    {
+        _isSignificant = Statistics.IsLessOrEqual(_studentQuantile);
     }
 
     private void ComputeTrustInterval()

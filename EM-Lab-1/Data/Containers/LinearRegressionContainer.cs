@@ -11,6 +11,7 @@ public class LinearRegressionContainer : TwoSelectionsContainer
 
     protected double? _residualsVariance; //S_зал^2
     protected double? _determinationCoefficient; //R^2
+    protected double? _correctedDeterminationCoefficient;
     protected double? _sse;
     protected double? _sseConst;
     protected Func<double, double?>? _regressionFunction;
@@ -58,6 +59,17 @@ public class LinearRegressionContainer : TwoSelectionsContainer
                 ComputeDeterminationCoefficient();
 
             return _determinationCoefficient!.Value;
+        }
+    }
+
+    public double CorrectedDeterminationCoefficient
+    {
+        get
+        {
+            if (_correctedDeterminationCoefficient == null)
+                ComputeCorrectedDeterminationCoefficient();
+
+            return _correctedDeterminationCoefficient!.Value;
         }
     }
 
@@ -112,9 +124,9 @@ public class LinearRegressionContainer : TwoSelectionsContainer
     {
         _parameterContainers = new RegressionParameterContainer[ParametersCount];
 
-        _parameterContainers[1] = new() { Value = PearsonCoefficient * SecondSelection.StandardDeviation / FirstSelection.StandardDeviation };
+        _parameterContainers[1] = new(StudentQuantile) { Value = PearsonCoefficient * SecondSelection.StandardDeviation / FirstSelection.StandardDeviation };
 
-        _parameterContainers[0] = new() { Value = SecondSelection.Mean - _parameterContainers[1].Value * FirstSelection.Mean };
+        _parameterContainers[0] = new(StudentQuantile) { Value = SecondSelection.Mean - _parameterContainers[1].Value * FirstSelection.Mean };
 
         _parameterContainers[0].Variance = ResidualsVariance / (ElementsCount * FirstSelection.Variance);
         _parameterContainers[1].Variance = ResidualsVariance * (1D / ElementsCount + Math.Pow(FirstSelection.Mean, 2) / (ElementsCount * FirstSelection.Variance));
@@ -145,6 +157,11 @@ public class LinearRegressionContainer : TwoSelectionsContainer
         var demonimator = (ElementsCount - 1) * SecondSelection.Variance;
 
         _determinationCoefficient = 1 - nominator / demonimator;
+    }
+
+    protected virtual void ComputeCorrectedDeterminationCoefficient()
+    {
+        _correctedDeterminationCoefficient = 1D - ResidualsVariance / SecondSelection.Variance;
     }
 
     protected virtual void ComputeSSE()

@@ -131,6 +131,9 @@ public partial class TwoSelectionsTab
 
     private void VisualizeExistingSelections(LinearRegressionContainer linearRegressionContainer, NotLinearRegressionContainer notLinearRegressionContainer)
     {
+        ClearLinearComputings();
+        ClearNotLinearComputings();
+
         VisualizePlot(linearRegressionContainer, notLinearRegressionContainer);
         VisualizePearson(linearRegressionContainer);
         VisualizeCorellationRation(linearRegressionContainer);
@@ -309,16 +312,11 @@ public partial class TwoSelectionsTab
 
             _linearQuantilesTextBoxes[i]!.Text = linearRegressionContainer.StudentQuantile.ToFormattedString();
 
-            var isParameterZero =
-                Math.Abs(linearRegressionContainer.ParameterContainers[i].Statistics)
-                .IsLessOrEqual(
-                linearRegressionContainer.StudentQuantile);
-
-            _linearSignificancesTextBoxes[i]!.Background = isParameterZero
+            _linearSignificancesTextBoxes[i]!.Background = linearRegressionContainer.ParameterContainers[i].IsSignificant
                 ? Constants.OkBrush
                 : Constants.NotOkBrush;
 
-            _linearSignificancesTextBoxes[i]!.Text = isParameterZero
+            _linearSignificancesTextBoxes[i]!.Text = linearRegressionContainer.ParameterContainers[i].IsSignificant
                 ? $"A{i} = 0"
                 : $"A{i} ≠ 0";
         }
@@ -328,6 +326,7 @@ public partial class TwoSelectionsTab
     {
         _linearResidualVarianceTextBox!.Text = linearRegressionContainer.ResidualsVariance.ToFormattedString();
         _linearDeterminationCoefficientTextBox!.Text = linearRegressionContainer.DeterminationCoefficient.ToFormattedString();
+        _linearCorrectedDeterminationCoefficientTextBox!.Text = linearRegressionContainer.CorrectedDeterminationCoefficient.ToFormattedString();
         _linearFTestStatisticsTextBox!.Text = linearRegressionContainer.FTestStatistics.ToFormattedString();
 
         var quantile = linearRegressionContainer.FisherQuantile;
@@ -343,8 +342,6 @@ public partial class TwoSelectionsTab
         _linearFTestConclusionTextBox!.Text = significant
             ? "Регресія значуща"
             : "Регресія незначуща";
-
-        //TODO: Fill other boxes
     }
 
     private void VisualizeNotLinearParameters(NotLinearRegressionContainer notLinearRegressionContainer)
@@ -358,16 +355,11 @@ public partial class TwoSelectionsTab
 
             _notLinearQuantilesTextBoxes[i]!.Text = notLinearRegressionContainer.StudentQuantile.ToFormattedString();
 
-            var isParameterZero =
-                Math.Abs(notLinearRegressionContainer.ParameterContainers[i].Statistics)
-                .IsLessOrEqual(
-                notLinearRegressionContainer.StudentQuantile);
-
-            _notLinearSignificancesTextBoxes[i]!.Background = isParameterZero
+            _notLinearSignificancesTextBoxes[i]!.Background = notLinearRegressionContainer.ParameterContainers[i].IsSignificant
                 ? Constants.OkBrush
                 : Constants.NotOkBrush;
 
-            _notLinearSignificancesTextBoxes[i]!.Text = isParameterZero
+            _notLinearSignificancesTextBoxes[i]!.Text = notLinearRegressionContainer.ParameterContainers[i].IsSignificant
                 ? $"{Constants.NotLinearParametersNames[i]} = 0"
                 : $"{Constants.NotLinearParametersNames[i]} ≠ 0";
         }
@@ -377,9 +369,8 @@ public partial class TwoSelectionsTab
     {
         _notLinearResidualVarianceTextBox!.Text = notLinearRegressionContainer.ResidualsVariance.ToFormattedString();
         _notLinearDeterminationCoefficientTextBox!.Text = notLinearRegressionContainer.DeterminationCoefficient.ToFormattedString();
+        _notLinearCorrectedDeterminationCoefficientTextBox!.Text = notLinearRegressionContainer.CorrectedDeterminationCoefficient.ToFormattedString();
         _notLinearFTestStatisticsTextBox!.Text = notLinearRegressionContainer.FTestStatistics.ToFormattedString();
-
-        //TODO: override FTest comptuings
 
         var quantile = notLinearRegressionContainer.FisherQuantile;
 

@@ -50,8 +50,8 @@ public partial class MainWindow : Window
             .SetATextBoxes(ValueATextBox, StandartDeviatonATextBox, TrustIntervalATextBox, StatisticsATextBox, QuantileATextBox, SignificanceATextBox)
             .SetBTextBoxes(ValueBTextBox, StandartDeviatonBTextBox, TrustIntervalBTextBox, StatisticsBTextBox, QuantileBTextBox, SignificanceBTextBox)
             .SetCTextBoxes(ValueCTextBox, StandartDeviatonCTextBox, TrustIntervalСTextBox, StatisticsCTextBox, QuantileCTextBox, SignificanceCTextBox)
-            .SetLinearTextBoxes(LinearResidualVarianceTextBox, LinearDeterminationCoefficientTextBox, LinearFTestStatisticsTextBox, LinearFTestQuantileTextBox, LinearFTestConclusionTextBox, LinearInputXTextBox, LinearComputedRegressionValueTextBox, LinearComputedRegressionTrustIntervalTextBox)
-            .SetNotLinearTextBoxes(NotLinearResidualVarianceTextBox, NotLinearDeterminationCoefficientTextBox, NotLinearFTestStatisticsTextBox, NotLinearFTestQuantileTextBox, NotLinearFTestConclusionTextBox, NotLinearInputXTextBox, NotLinearComputedRegressionValueTextBox, NotLinearComputedRegressionTrustIntervalTextBox);
+            .SetLinearTextBoxes(LinearResidualVarianceTextBox, LinearCorrectedDeterminationCoefficientTextBox, LinearDeterminationCoefficientTextBox, LinearFTestStatisticsTextBox, LinearFTestQuantileTextBox, LinearFTestConclusionTextBox, LinearInputXTextBox, LinearComputedRegressionValueTextBox, LinearComputedRegressionTrustIntervalTextBox)
+            .SetNotLinearTextBoxes(NotLinearResidualVarianceTextBox, NotLinearCorrectedDeterminationCoefficientTextBox, NotLinearDeterminationCoefficientTextBox, NotLinearFTestStatisticsTextBox, NotLinearFTestQuantileTextBox, NotLinearFTestConclusionTextBox, NotLinearInputXTextBox, NotLinearComputedRegressionValueTextBox, NotLinearComputedRegressionTrustIntervalTextBox);
     }
 
     private void SetOneSelection(SelectionNumber selectionNumber)

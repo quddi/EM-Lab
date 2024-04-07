@@ -55,6 +55,7 @@ public partial class TwoSelectionsTab
 
     private TextBox? _linearResidualVarianceTextBox;
     private TextBox? _linearDeterminationCoefficientTextBox;
+    private TextBox? _linearCorrectedDeterminationCoefficientTextBox;
     private TextBox? _linearFTestStatisticsTextBox;
     private TextBox? _linearFTestQuantileTextBox;
     private TextBox? _linearFTestConclusionTextBox;
@@ -64,6 +65,7 @@ public partial class TwoSelectionsTab
 
     private TextBox? _notLinearResidualVarianceTextBox;
     private TextBox? _notLinearDeterminationCoefficientTextBox;
+    private TextBox? _notLinearCorrectedDeterminationCoefficientTextBox;
     private TextBox? _notLinearFTestStatisticsTextBox;
     private TextBox? _notLinearFTestQuantileTextBox;
     private TextBox? _notLinearFTestConclusionTextBox;
@@ -217,11 +219,12 @@ public partial class TwoSelectionsTab
     }
 
     public TwoSelectionsTab SetLinearTextBoxes(TextBox linearResidualVarianceTextBox, TextBox linearDeterminationCoefficientTextBox,
-        TextBox linearFTestStatisticsTextBox, TextBox linearFTestQuantileTextBox, TextBox linearFTestConclusionTextBox,
-        TextBox linearInputXTextBox, TextBox linearComputedRegressionValueTextBox, TextBox linearComputedRegressionTrustIntervalTextBox)
+        TextBox linearCorrectedDeterminationCoefficientTextBox, TextBox linearFTestStatisticsTextBox, TextBox linearFTestQuantileTextBox, 
+        TextBox linearFTestConclusionTextBox, TextBox linearInputXTextBox, TextBox linearComputedRegressionValueTextBox, TextBox linearComputedRegressionTrustIntervalTextBox)
     {
         _linearResidualVarianceTextBox = linearResidualVarianceTextBox;
         _linearDeterminationCoefficientTextBox = linearDeterminationCoefficientTextBox;
+        _linearCorrectedDeterminationCoefficientTextBox = linearCorrectedDeterminationCoefficientTextBox;
         _linearFTestStatisticsTextBox = linearFTestStatisticsTextBox;
         _linearFTestQuantileTextBox = linearFTestQuantileTextBox;
         _linearFTestConclusionTextBox = linearFTestConclusionTextBox;
@@ -233,11 +236,12 @@ public partial class TwoSelectionsTab
     }
 
     public TwoSelectionsTab SetNotLinearTextBoxes(TextBox notLinearResidualVarianceTextBox, TextBox notLinearDeterminationCoefficientTextBox,
-        TextBox notLinearFTestStatisticsTextBox, TextBox notLinearFTestQuantileTextBox, TextBox notLinearFTestConclusionTextBox,
-        TextBox notLinearInputXTextBox, TextBox notLinearComputedRegressionValueTextBox, TextBox notLinearComputedRegressionTrustIntervalTextBox)
+        TextBox notLinearCorrectedDeterminationCoefficientTextBox, TextBox notLinearFTestStatisticsTextBox, TextBox notLinearFTestQuantileTextBox, 
+        TextBox notLinearFTestConclusionTextBox, TextBox notLinearInputXTextBox, TextBox notLinearComputedRegressionValueTextBox, TextBox notLinearComputedRegressionTrustIntervalTextBox)
     {
         _notLinearResidualVarianceTextBox = notLinearResidualVarianceTextBox;
         _notLinearDeterminationCoefficientTextBox = notLinearDeterminationCoefficientTextBox;
+        _notLinearCorrectedDeterminationCoefficientTextBox = notLinearCorrectedDeterminationCoefficientTextBox;
         _notLinearFTestStatisticsTextBox = notLinearFTestStatisticsTextBox;
         _notLinearFTestQuantileTextBox = notLinearFTestQuantileTextBox;
         _notLinearFTestConclusionTextBox = notLinearFTestConclusionTextBox;
