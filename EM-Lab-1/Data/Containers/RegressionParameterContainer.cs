@@ -2,13 +2,24 @@
 
 public class RegressionParameterContainer
 {
-    private double? _variance;
+    private double? _standardDeviation;
     private double? _statistics;
 
     private Interval? _trustInterval;
 
     public double Value { get; init; }
     public double Variance { get; init; }
+
+    public double StandardDeviation
+    {
+        get
+        {
+            if (_standardDeviation == null)
+                ComputeStandardDeviation();
+
+            return _standardDeviation!.Value;
+        }
+    }
 
     public double Statistics
     {
@@ -30,6 +41,11 @@ public class RegressionParameterContainer
 
             return _trustInterval!.Value;
         }
+    }
+
+    private void ComputeStandardDeviation()
+    {
+        _standardDeviation = Math.Sqrt(Variance);
     }
 
     private void ComputeStatistics()

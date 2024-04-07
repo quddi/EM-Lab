@@ -6,8 +6,6 @@ public class NotLinearRegressionContainer : LinearRegressionContainer
 {
     private double[]? _deltas;
 
-    private RegressionParameterContainer[]? _parameterContainers;
-
     private Matrix<double>? _aMatrix;
     private Vector<double>? _bVector;
     private Matrix<double>? _variancesMatrix;
@@ -22,17 +20,6 @@ public class NotLinearRegressionContainer : LinearRegressionContainer
                 ComputeDeltas();
 
             return _deltas!;
-        }
-    }
-
-    public RegressionParameterContainer[] ParameterContainers
-    {
-        get
-        {
-            if (_parameterContainers == null)
-                ComputeParametersContainers();
-
-            return _parameterContainers!;
         }
     }
 
@@ -87,7 +74,7 @@ public class NotLinearRegressionContainer : LinearRegressionContainer
         }
     }
 
-    private void ComputeParametersContainers()
+    protected override void ComputeParametersContainers()
     {
         _parameterContainers = new RegressionParameterContainer[ParametersCount];
 
@@ -133,7 +120,10 @@ public class NotLinearRegressionContainer : LinearRegressionContainer
 
         var nominator = FirstSelection.Values
             .Zip(SecondSelection.Values, (x, y) => (x, y))
-            .Sum(pair => Math.Pow(pair.y - Parameter0 - Parameter1 * pair.x - Parameter2 * pair.x * pair.x, 2));
+            .Sum(pair => Math.Pow(pair.y 
+            - ParameterContainers[0].Value 
+            - ParameterContainers[1].Value * pair.x 
+            - ParameterContainers[2].Value * pair.x * pair.x, 2));
 
         _residualsVariance = nominator / denominator;
     }

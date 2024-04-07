@@ -1,6 +1,5 @@
 ﻿using ScottPlot.Plottable;
 using System.Windows;
-using System.Windows.Media;
 
 namespace EM_Lab_1;
 
@@ -262,57 +261,34 @@ public partial class TwoSelectionsTab
 
     private void VisualizeLinearRegression(LinearRegressionContainer linearRegressionContainer)
     {
-        VisualizeA0(linearRegressionContainer);
-        VisualizeA1(linearRegressionContainer);
+        VisualizeLinearParameters(linearRegressionContainer);
         VisualizeLinear(linearRegressionContainer);
     }
 
-    private void VisualizeA0(LinearRegressionContainer linearRegressionContainer)
+    private void VisualizeLinearParameters(LinearRegressionContainer linearRegressionContainer)
     {
-        _valueA0TextBox!.Text = linearRegressionContainer.InterceptCoefficient.ToFormattedString();
-        _standartDeviatonA0TextBox!.Text = linearRegressionContainer.InterceptStandardDeviation.ToFormattedString();
-        _trustIntervalA0TextBox!.Text = linearRegressionContainer.InterceptTrustInterval.ToFormattedString();
-        _statisticsA0TextBox!.Text = linearRegressionContainer.InterceptStatistics.ToFormattedString();
+        for (int i = 0; i < linearRegressionContainer.ParametersCount; i++)
+        {
+            _linearParametersValuesTextBoxes[i]!.Text = linearRegressionContainer.ParameterContainers[i].Value.ToFormattedString();
+            _linearStandartDeviatonsTextBoxes[i]!.Text = linearRegressionContainer.ParameterContainers[i].StandardDeviation.ToFormattedString();
+            _linearTrustIntervalsTextBoxes[i]!.Text = linearRegressionContainer.ParameterContainers[i].TrustInterval.ToFormattedString();
+            _linearStatisticsTextBoxes[i]!.Text = linearRegressionContainer.ParameterContainers[i].Statistics.ToFormattedString();
 
-        //???
-        _quantileA0TextBox!.Text = linearRegressionContainer.StudentQuantile.ToFormattedString();
+            _linearQuantilesTextBoxes[i]!.Text = linearRegressionContainer.StudentQuantile.ToFormattedString();
 
-        var isA0Zero =
-            Math.Abs(linearRegressionContainer.InterceptStatistics)
-            .IsLessOrEqual(
-            linearRegressionContainer.StudentQuantile);
+            var isParameterZero =
+                Math.Abs(linearRegressionContainer.ParameterContainers[i].Statistics)
+                .IsLessOrEqual(
+                linearRegressionContainer.StudentQuantile);
 
-        _significanceA0TextBox!.Background = isA0Zero
-            ? Constants.OkBrush
-            : Constants.NotOkBrush;
+            _linearSignificancesTextBoxes[i]!.Background = isParameterZero
+                ? Constants.OkBrush
+                : Constants.NotOkBrush;
 
-        _significanceA0TextBox!.Text = isA0Zero
-            ? "A0 = 0"
-            : "A0 ≠ 0";
-    }
-
-    private void VisualizeA1(LinearRegressionContainer linearRegressionContainer)
-    {
-        _valueA1TextBox!.Text = linearRegressionContainer.SlopeCoefficient.ToFormattedString();
-        _standartDeviatonA1TextBox!.Text = linearRegressionContainer.SlopeStandardDeviation.ToFormattedString();
-        _trustIntervalA1TextBox!.Text = linearRegressionContainer.SlopeTrustInterval.ToFormattedString();
-        _statisticsA1TextBox!.Text = linearRegressionContainer.SlopeStatistics.ToFormattedString();
-
-        //???
-        _quantileA1TextBox!.Text = linearRegressionContainer.StudentQuantile.ToFormattedString();
-
-        var isA1Zero =
-            Math.Abs(linearRegressionContainer.SlopeStatistics)
-            .IsLessOrEqual(
-            linearRegressionContainer.StudentQuantile);
-
-        _significanceA1TextBox!.Background = isA1Zero
-            ? Constants.OkBrush
-            : Constants.NotOkBrush;
-
-        _significanceA1TextBox!.Text = isA1Zero
-            ? "A1 = 0"
-            : "A1 ≠ 0";
+            _linearSignificancesTextBoxes[i]!.Text = isParameterZero
+                ? $"A{i} = 0"
+                : $"A{i} ≠ 0";
+        }
     }
 
     private void VisualizeLinear(LinearRegressionContainer linearRegressionContainer)
@@ -337,6 +313,4 @@ public partial class TwoSelectionsTab
 
         //TODO: Fill other boxes
     }
-
-
 }

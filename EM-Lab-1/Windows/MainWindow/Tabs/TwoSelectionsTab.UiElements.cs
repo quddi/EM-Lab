@@ -39,19 +39,12 @@ public partial class TwoSelectionsTab
     private TextBox? _mainFirstConclusionTextBox;
     private TextBox? _mainSecondConclusionTextBox;
 
-    private TextBox? _valueA0TextBox;
-    private TextBox? _standartDeviatonA0TextBox;
-    private TextBox? _trustIntervalA0TextBox;
-    private TextBox? _statisticsA0TextBox;
-    private TextBox? _quantileA0TextBox;
-    private TextBox? _significanceA0TextBox;
-    
-    private TextBox? _valueA1TextBox;
-    private TextBox? _standartDeviatonA1TextBox;
-    private TextBox? _trustIntervalA1TextBox;
-    private TextBox? _statisticsA1TextBox;
-    private TextBox? _quantileA1TextBox;
-    private TextBox? _significanceA1TextBox;
+    private TextBox?[] _linearParametersValuesTextBoxes = new TextBox?[2];
+    private TextBox?[] _linearStandartDeviatonsTextBoxes = new TextBox?[2];
+    private TextBox?[] _linearTrustIntervalsTextBoxes = new TextBox?[2];
+    private TextBox?[] _linearStatisticsTextBoxes = new TextBox?[2];
+    private TextBox?[] _linearQuantilesTextBoxes = new TextBox?[2];
+    private TextBox?[] _linearSignificancesTextBoxes = new TextBox?[2];
 
     private TextBox? _linearResidualVarianceTextBox;
     private TextBox? _linearDeterminationCoefficientTextBox;
@@ -147,15 +140,15 @@ public partial class TwoSelectionsTab
     }
 
     public TwoSelectionsTab SetA0TextBoxes(TextBox valueA0TextBox, TextBox standartDeviatonA0TextBox, 
-        TextBox trustIntervalA0TextBox,    TextBox statisticsA0TextBox, TextBox quantileA0TextBox, 
+        TextBox trustIntervalA0TextBox, TextBox statisticsA0TextBox, TextBox quantileA0TextBox, 
         TextBox significanceA0TextBox)
     {
-        _valueA0TextBox = valueA0TextBox;
-        _standartDeviatonA0TextBox = standartDeviatonA0TextBox;
-        _trustIntervalA0TextBox = trustIntervalA0TextBox;
-        _statisticsA0TextBox = statisticsA0TextBox;
-        _quantileA0TextBox = quantileA0TextBox;
-        _significanceA0TextBox = significanceA0TextBox;
+        _linearParametersValuesTextBoxes[0] = valueA0TextBox;
+        _linearStandartDeviatonsTextBoxes[0] = standartDeviatonA0TextBox;
+        _linearTrustIntervalsTextBoxes[0] = trustIntervalA0TextBox;
+        _linearStatisticsTextBoxes[0] = statisticsA0TextBox;
+        _linearQuantilesTextBoxes[0] = quantileA0TextBox;
+        _linearSignificancesTextBoxes[0] = significanceA0TextBox;
 
         return this;
     }
@@ -164,12 +157,12 @@ public partial class TwoSelectionsTab
         TextBox trustIntervalA1TextBox, TextBox statisticsA1TextBox, TextBox quantileA1TextBox,
         TextBox significanceA1TextBox)
     {
-        _valueA1TextBox = valueA1TextBox;
-        _standartDeviatonA1TextBox = standartDeviatonA1TextBox;
-        _trustIntervalA1TextBox = trustIntervalA1TextBox;
-        _statisticsA1TextBox = statisticsA1TextBox;
-        _quantileA1TextBox = quantileA1TextBox;
-        _significanceA1TextBox = significanceA1TextBox;
+        _linearParametersValuesTextBoxes[1] = valueA1TextBox;
+        _linearStandartDeviatonsTextBoxes[1] = standartDeviatonA1TextBox;
+        _linearTrustIntervalsTextBoxes[1] = trustIntervalA1TextBox;
+        _linearStatisticsTextBoxes[1] = statisticsA1TextBox;
+        _linearQuantilesTextBoxes[1] = quantileA1TextBox;
+        _linearSignificancesTextBoxes[1] = significanceA1TextBox;
 
         return this;
     }
