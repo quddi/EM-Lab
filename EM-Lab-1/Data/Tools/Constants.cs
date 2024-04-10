@@ -25,7 +25,9 @@ public static class Constants
     public static readonly System.Drawing.Color PlotLinearColor = System.Drawing.Color.FromArgb(255, 200, 78, 195);
     public static readonly System.Drawing.Color PlotNotLinearColor = System.Drawing.Color.FromArgb(255, 78, 200, 83);
     public static readonly System.Drawing.Color PlotLinearComputedPointColor = System.Drawing.Color.FromArgb(255, 86, 226, 209);
+    public static readonly System.Drawing.Color PlotLinearEdgesPointColor = System.Drawing.Color.FromArgb(255, 66, 206, 189);
     public static readonly System.Drawing.Color PlotNotLinearComputedPointColor = System.Drawing.Color.FromArgb(255, 252, 165, 56);
+    public static readonly System.Drawing.Color PlotNotLinearEdgesPointColor = System.Drawing.Color.FromArgb(255, 232, 145, 36);
 
     public static readonly Brush OkBrush = new SolidColorBrush(OkColor);
     public static readonly Brush NotOkBrush = new SolidColorBrush(NotOkColor);

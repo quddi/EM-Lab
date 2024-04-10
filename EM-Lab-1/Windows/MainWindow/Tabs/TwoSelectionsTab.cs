@@ -5,8 +5,8 @@ namespace EM_Lab_1;
 
 public partial class TwoSelectionsTab
 {
-    private MarkerPlot? _linearComputedPoint;
-    private MarkerPlot? _notLinearComputedPoint;
+    private (MarkerPlot Value, MarkerPlot Down, MarkerPlot Up)? _linearComputedPoints;
+    private (MarkerPlot Value, MarkerPlot Down, MarkerPlot Up)? _notLinearComputedPoint;
 
     public void VisualizeSelections(LinearRegressionContainer? linearRegressionContainer, NotLinearRegressionContainer? notLinearRegressionContainer)
     {
@@ -32,8 +32,18 @@ public partial class TwoSelectionsTab
 
         if (y != null)
         {
-            _linearComputedPoint = _correlationFieldPlot!.Plot.AddPoint(x, y.Value, 
+            var valuePoint = _correlationFieldPlot!.Plot.AddPoint(x, y.Value, 
                 Constants.PlotLinearComputedPointColor, size: Constants.ComputedPointsSize);
+
+            var edges = linearRegressionContainer.RegressionTrustIntervalFunction(x);
+
+            var downPoint = _correlationFieldPlot!.Plot.AddPoint(x, edges!.Value.LeftEdge,
+                Constants.PlotLinearComputedPointColor, size: Constants.ComputedPointsSize);
+
+            var upPoint = _correlationFieldPlot!.Plot.AddPoint(x, edges!.Value.RightEdge,
+                Constants.PlotLinearComputedPointColor, size: Constants.ComputedPointsSize);
+
+            _linearComputedPoints = (valuePoint, downPoint, upPoint);
 
             _correlationFieldPlot!.Refresh();
         }
@@ -44,11 +54,13 @@ public partial class TwoSelectionsTab
         _linearComputedRegressionValueTextBox!.Text = string.Empty;
         _linearComputedRegressionTrustIntervalTextBox!.Text = string.Empty;
         
-        if (_linearComputedPoint != null)
+        if (_linearComputedPoints != null)
         {
-            _correlationFieldPlot!.Plot.Remove(_linearComputedPoint);
+            _correlationFieldPlot!.Plot.Remove(_linearComputedPoints.Value.Value);
+            _correlationFieldPlot!.Plot.Remove(_linearComputedPoints.Value.Down);
+            _correlationFieldPlot!.Plot.Remove(_linearComputedPoints.Value.Up);
             _correlationFieldPlot!.Refresh();
-            _linearComputedPoint = null;
+            _linearComputedPoints = null;
         }
     }
 
@@ -68,8 +80,18 @@ public partial class TwoSelectionsTab
 
         if (y != null)
         {
-            _notLinearComputedPoint = _correlationFieldPlot!.Plot.AddPoint(x, y.Value,
+            var valuePoint = _correlationFieldPlot!.Plot.AddPoint(x, y.Value,
                 Constants.PlotNotLinearComputedPointColor, size: Constants.ComputedPointsSize);
+
+            var edges = notLinearRegressionContainer.RegressionTrustIntervalFunction(x);
+
+            var downPoint = _correlationFieldPlot!.Plot.AddPoint(x, edges!.Value.LeftEdge,
+                Constants.PlotNotLinearEdgesPointColor, size: Constants.ComputedPointsSize);
+            
+            var upPoint = _correlationFieldPlot!.Plot.AddPoint(x, edges!.Value.RightEdge,
+                Constants.PlotNotLinearEdgesPointColor, size: Constants.ComputedPointsSize);
+
+            _notLinearComputedPoint = (valuePoint, downPoint, upPoint);
 
             _correlationFieldPlot!.Refresh();
         }
@@ -82,7 +104,9 @@ public partial class TwoSelectionsTab
 
         if (_notLinearComputedPoint != null)
         {
-            _correlationFieldPlot!.Plot.Remove(_notLinearComputedPoint);
+            _correlationFieldPlot!.Plot.Remove(_notLinearComputedPoint.Value.Value);
+            _correlationFieldPlot!.Plot.Remove(_notLinearComputedPoint.Value.Down);
+            _correlationFieldPlot!.Plot.Remove(_notLinearComputedPoint.Value.Up);
             _correlationFieldPlot!.Refresh();
             _notLinearComputedPoint = null;
         }
@@ -310,7 +334,7 @@ public partial class TwoSelectionsTab
             _linearTrustIntervalsTextBoxes[i]!.Text = linearRegressionContainer.ParameterContainers[i].TrustInterval.ToFormattedString();
             _linearStatisticsTextBoxes[i]!.Text = linearRegressionContainer.ParameterContainers[i].Statistics.ToFormattedString();
 
-            _linearQuantilesTextBoxes[i]!.Text = linearRegressionContainer.StudentQuantile.ToFormattedString();
+            _linearQuantilesTextBoxes[i]!.Text = linearRegressionContainer.ParameterContainers[i].SignificanceQuantile.ToFormattedString();
 
             _linearSignificancesTextBoxes[i]!.Background = linearRegressionContainer.ParameterContainers[i].IsSignificant
                 ? Constants.OkBrush
@@ -353,7 +377,7 @@ public partial class TwoSelectionsTab
             _notLinearTrustIntervalsTextBoxes[i]!.Text = notLinearRegressionContainer.ParameterContainers[i].TrustInterval.ToFormattedString();
             _notLinearStatisticsTextBoxes[i]!.Text = notLinearRegressionContainer.ParameterContainers[i].Statistics.ToFormattedString();
 
-            _notLinearQuantilesTextBoxes[i]!.Text = notLinearRegressionContainer.StudentQuantile.ToFormattedString();
+            _notLinearQuantilesTextBoxes[i]!.Text = notLinearRegressionContainer.ParameterContainers[i].SignificanceQuantile.ToFormattedString();
 
             _notLinearSignificancesTextBoxes[i]!.Background = notLinearRegressionContainer.ParameterContainers[i].IsSignificant
                 ? Constants.OkBrush

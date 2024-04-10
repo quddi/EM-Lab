@@ -4,6 +4,7 @@ namespace EM_Lab_1;
 
 public class NotLinearRegressionContainer : LinearRegressionContainer
 {
+    private double? _fixedStudentQuantile;
     private double[]? _deltas;
 
     private Matrix<double>? _aMatrix;
@@ -11,6 +12,17 @@ public class NotLinearRegressionContainer : LinearRegressionContainer
     private Matrix<double>? _variancesMatrix;
 
     public override int ParametersCount => 3;
+
+    public double FixedStudentQuantile
+    {
+        get
+        {
+            if (_fixedStudentQuantile == null)
+                ComputeFixedStudentQuantile();
+
+            return _fixedStudentQuantile!.Value;
+        }
+    }
 
     public double[] Deltas
     {
@@ -57,6 +69,12 @@ public class NotLinearRegressionContainer : LinearRegressionContainer
     }
 
     #region Computing method
+    private void ComputeFixedStudentQuantile()
+    {
+        _fixedStudentQuantile = Compute.StudentDistributionQuantile(1D - Constants.Alpha / 2, ElementsCount - 3);
+    }
+
+
     private void ComputeDeltas()
     {
         _deltas = new double[ParametersCount];
@@ -81,7 +99,7 @@ public class NotLinearRegressionContainer : LinearRegressionContainer
         var determinant = AMatrix.Determinant();
 
         for (int i = 0; i < ParametersCount; i++)
-            _parameterContainers[i] = new(StudentQuantile) { Value = Deltas[i] / determinant };
+            _parameterContainers[i] = new(FixedStudentQuantile) { Value = Deltas[i] / determinant };
 
         for (int i = 0; i < ParametersCount; i++)
             _parameterContainers[i].Variance = VariancesMatrix[i, i];
@@ -114,7 +132,7 @@ public class NotLinearRegressionContainer : LinearRegressionContainer
 
     protected override void ComputeResidualsVariance()
     {
-        var denominator = ElementsCount - 3.0D;
+        var denominator = ElementsCount - ParametersCount * 1.0D;
 
         var nominator = FirstSelection.Values
             .Zip(SecondSelection.Values, (x, y) => (x, y))
